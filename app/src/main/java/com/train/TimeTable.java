@@ -12,6 +12,44 @@ import androidx.fragment.app.Fragment;
 
 public class TimeTable extends Fragment implements View.OnClickListener {
 
+    private int tableNumber;
+    private String tableName;
+    private String arrival;
+    private String depart;
+
+    public TimeTable(){
+
+    }
+
+    public TimeTable(String tableName, String arrival, String depart){
+        this.tableName = tableName;
+        this.arrival = arrival;
+        this.depart = depart;
+    }
+
+    public void setTableName(String tableName){
+        this.tableName = tableName;
+    }
+
+    public void setArrival(String arrival){
+        this.arrival = arrival;
+    }
+    public void setDepart(String depart){
+        this.depart = depart;
+    }
+
+    public String getTableName(){
+        return tableName;
+    }
+
+    public String getArrival(){
+        return arrival;
+    }
+
+    public String getDepart(){
+        return depart;
+    }
+
     Button searchTimeTable, createTimeTable, editTimeTable, deleteTimeTable;
     @Nullable
     @Override

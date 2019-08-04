@@ -76,7 +76,7 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
         startStation.setAdapter(startStationAdapter);
 
 
-        final ArrayAdapter<String> endStationAdapter = new ArrayAdapter<String>(this.getActivity(),
+        ArrayAdapter<String> endStationAdapter = new ArrayAdapter<String>(this.getActivity(),
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.endStations));
         endStationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         endStation.setAdapter(endStationAdapter);
@@ -124,21 +124,11 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View view) {
                 if(timeFilterCheck.isChecked()){
-                    startTime.setEnabled(true);
-                    startTime.setBackgroundColor(Color.parseColor("#357EC7"));
-                    startTime.setTextColor(Color.parseColor("#FFFFFF"));
-                    endTime.setEnabled(true);
-                    endTime.setBackgroundColor(Color.parseColor("#357EC7"));
-                    endTime.setTextColor(Color.parseColor("#FFFFFF"));
+                    Utils.enableBtn(startTime);
+                    Utils.enableBtn(endTime);
                 }else{
-                    startTimeTxt.setText("Set Start Time");
-                    endTimeTxt.setText("set End Time");
-                    startTime.setEnabled(false);
-                    startTime.setBackgroundColor(Color.parseColor("#E5E4E2"));
-                    startTime.setTextColor(Color.parseColor("#000000"));
-                    endTime.setEnabled(false);
-                    endTime.setBackgroundColor(Color.parseColor("#E5E4E2"));
-                    endTime.setTextColor(Color.parseColor("#000000"));
+                    Utils.disableBtn(startTime);
+                    Utils.disableBtn(endTime);
                 }
             }
         });
