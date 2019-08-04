@@ -28,7 +28,7 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
         arrivalBtn = (Button) view.findViewById(R.id.arrivalTimeBtn);
         departBtn = (Button) view.findViewById(R.id.departTimeBtn);
         dateBtn = (Button) view.findViewById(R.id.dateBtn);
-        saveBtn = (Button) view.findViewById(R.id.saveTableBtn);
+        saveBtn = (Button) view.findViewById(R.id.editBtn);
         arrivalTimeTxt = (TextView)view.findViewById(R.id.arrivalTimeTxt);
         departTimeTxt = (TextView)view.findViewById(R.id.departTxt);
         dateTxt = (TextView)view.findViewById(R.id.dateTxt);
@@ -79,7 +79,7 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
             case R.id.dateBtn:
                 getDateTime.getDateView(getContext(), dateTxt);
                 break;
-            case R.id.saveTableBtn:
+            case R.id.editBtn:
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).addToBackStack(null).commit();
                 break;

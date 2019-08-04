@@ -129,6 +129,8 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
                 }else{
                     Utils.disableBtn(startTime);
                     Utils.disableBtn(endTime);
+                    startTimeTxt.setText("Set Start Time");
+                    endTimeTxt.setText("Set End Time");
                 }
             }
         });

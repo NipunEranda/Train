@@ -15,21 +15,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RecentSearches extends Fragment implements AdapterView.OnItemClickListener {
+public class UserTimeTables extends Fragment implements AdapterView.OnItemClickListener {
 
-    ListView recentSearches;
+    ListView userTimeTables;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recent_searches, container, false);
+        View view = inflater.inflate(R.layout.user_time_table, container, false);
 
-        recentSearches = (ListView)view.findViewById(R.id.userTimeTableList);
+        userTimeTables = (ListView)view.findViewById(R.id.userTimeTableList);
 
         ArrayAdapter<String> startStationAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.recentSearch));
-        recentSearches.setAdapter(startStationAdapter);
-        recentSearches.setOnItemClickListener(this);
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.userDefineTimeTables));
+        userTimeTables.setAdapter(startStationAdapter);
+        userTimeTables.setOnItemClickListener(this);
 
         return view;
     }
@@ -38,7 +38,7 @@ public class RecentSearches extends Fragment implements AdapterView.OnItemClickL
     public void onResume() {
         super.onResume();
         ((MainActivity) getActivity())
-                .setActionBarTitle("Recent Timetables");
+                .setActionBarTitle("User Timetables");
     }
 
     @Override
