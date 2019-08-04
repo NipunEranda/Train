@@ -48,8 +48,9 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
         startTime.setEnabled(false);
         endTime.setEnabled(false);
         startTime.setBackgroundColor(Color.parseColor("#E5E4E2"));
+        startTime.setTextColor(Color.parseColor("#000000"));
         endTime.setBackgroundColor(Color.parseColor("#E5E4E2"));
-        //endTime.setTextColor(Color.parseColor("#FFF"));
+        endTime.setTextColor(Color.parseColor("#000000"));
         swap = (Button)view.findViewById(R.id.swap);
         txtDate=(EditText)view.findViewById(R.id.in_date);
         startTimeTxt=(TextView)view.findViewById(R.id.startTimeTxt);
@@ -75,7 +76,7 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
         startStation.setAdapter(startStationAdapter);
 
 
-        ArrayAdapter<String> endStationAdapter = new ArrayAdapter<String>(this.getActivity(),
+        final ArrayAdapter<String> endStationAdapter = new ArrayAdapter<String>(this.getActivity(),
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.endStations));
         endStationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         endStation.setAdapter(endStationAdapter);
@@ -123,9 +124,21 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View view) {
                 if(timeFilterCheck.isChecked()){
-
+                    startTime.setEnabled(true);
+                    startTime.setBackgroundColor(Color.parseColor("#357EC7"));
+                    startTime.setTextColor(Color.parseColor("#FFFFFF"));
+                    endTime.setEnabled(true);
+                    endTime.setBackgroundColor(Color.parseColor("#357EC7"));
+                    endTime.setTextColor(Color.parseColor("#FFFFFF"));
                 }else{
-
+                    startTimeTxt.setText("Set Start Time");
+                    endTimeTxt.setText("set End Time");
+                    startTime.setEnabled(false);
+                    startTime.setBackgroundColor(Color.parseColor("#E5E4E2"));
+                    startTime.setTextColor(Color.parseColor("#000000"));
+                    endTime.setEnabled(false);
+                    endTime.setBackgroundColor(Color.parseColor("#E5E4E2"));
+                    endTime.setTextColor(Color.parseColor("#000000"));
                 }
             }
         });
@@ -136,7 +149,7 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.dateBtn:
+            case R.id.btn_date:
                 getDateTime.getDateView(getContext(), txtDate);
                 break;
 

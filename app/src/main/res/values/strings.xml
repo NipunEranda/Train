@@ -42,7 +42,7 @@
     <string-array name="trainTypes">
         <item>Select Train Type : </item>
         <item>EXPRESS TRAIN</item>
-        <item>LONGDISTANCE</item>
+        <item>LONG DISTANCE</item>
         <item>COLOMBO COMMUTER</item>
     </string-array>
 
