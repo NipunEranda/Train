@@ -37,10 +37,11 @@
 
     <EditText
         android:id="@+id/tEditName"
-        android:layout_width="192dp"
-        android:layout_height="42dp"
+        android:layout_width="220dp"
+        android:layout_height="41dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_textboder"
         android:textSize="18dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,11 +67,12 @@
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="220dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_textboder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.702"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toEndOf="@+id/tType"
         app:layout_constraintTop_toBottomOf="@+id/tEditName" />
 
@@ -92,10 +94,11 @@
 
     <EditText
         android:id="@+id/idEditt"
-        android:layout_width="192dp"
+        android:layout_width="220dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_textboder"
         android:textSize="18dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tId"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,10 +123,11 @@
 
     <EditText
         android:id="@+id/startEdit"
-        android:layout_width="192dp"
+        android:layout_width="220dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_textboder"
         app:layout_constraintBaseline_toBaselineOf="@+id/tStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.589"
@@ -147,10 +151,11 @@
 
     <EditText
         android:id="@+id/destiEdit"
-        android:layout_width="192dp"
+        android:layout_width="220dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/custom_textboder"
         app:layout_constraintBaseline_toBaselineOf="@+id/tDestination"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.589"
