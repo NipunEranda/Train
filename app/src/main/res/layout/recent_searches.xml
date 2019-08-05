@@ -7,33 +7,62 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
         tools:layout_conversion_absoluteHeight="0dp"
         tools:layout_conversion_absoluteWidth="411dp"
         tools:layout_conversion_wrapHeight="0"
         tools:layout_conversion_wrapWidth="1080"
-        tools:ignore="MissingConstraints">
+        tools:layout_editor_absoluteY="0dp">
 
         <ListView
-            android:id="@+id/userTimeTableList"
-            style="@style/Widget.AppCompat.ListView"
+            android:id="@+id/listView1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:cacheColorHint="#00FFFFFF"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="550dp"
+            android:layout_marginTop="80dp"
+            android:choiceMode="singleChoice"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_conversion_absoluteWidth="411dp" />
+            tools:layout_editor_absoluteX="0dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/recentViewDeleteBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="@color/buttonColor"
+        android:text="delete"
+        android:textColor="@color/white"
+        app:layout_constraintBaseline_toBaselineOf="@+id/clearRecentBtn"
+        app:layout_constraintStart_toEndOf="@id/recentViewBtn" />
+
+    <Button
+        android:id="@+id/recentViewBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:background="@color/buttonColor"
+        android:text="view"
+        android:textColor="@color/white"
+        app:layout_constraintBaseline_toBaselineOf="@+id/recentViewDeleteBtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/clearRecentBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/buttonColor"
+        android:text="clear"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@id/recentViewDeleteBtn"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
