@@ -58,7 +58,12 @@
         <item>Galle - Kollupitiya</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="viewTrain">
+        <item>Ruhunu Kumari</item>
+        <item>Udarata Menike</item>
+        <item>Yal devi</item>
+        <item>Rajarata Rejini</item>
+        <item>Samudra devi</item>
+    </string-array>
 
 </resources>
