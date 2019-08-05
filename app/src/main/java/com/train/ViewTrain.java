@@ -38,6 +38,8 @@ public class ViewTrain extends Fragment {
                 getResources().getStringArray(R.array.viewTrain));
 
         tView.setAdapter(listAdapter);
+
+        
     }
 
 

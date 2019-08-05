@@ -46,7 +46,19 @@
         <item>COLOMBO COMMUTER</item>
     </string-array>
 
-    <string-array name="viewTrain">
+    <string-array name="recentSearch">
+        <item>Amabalngoda - Kollupitiya</item>
+        <item>Kollupitiya - Ambalangoda</item>
+        <item>Galle - Kollupitiya</item>
+    </string-array>
+
+    <string-array name="userDefineTimeTables">
+        <item>Amabalngoda - Kollupitiya</item>
+        <item>Kollupitiya - Ambalangoda</item>
+        <item>Galle - Kollupitiya</item>
+    </string-array>
+	
+	<string-array name="viewTrain">
         <item>Ruhunu Kumari</item>
         <item>Udarata Menike</item>
         <item>Yal devi</item>
