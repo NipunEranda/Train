@@ -44,7 +44,7 @@ public class ViewTrain extends Fragment {
         tView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //add a new fragment
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TrainDetails()).addToBackStack(null).commit();
             }
         });
 
