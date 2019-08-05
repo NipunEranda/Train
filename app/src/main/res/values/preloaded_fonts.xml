@@ -2,6 +2,8 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/aclonica</item>
+        <item>@font/audiowide</item>
+        <item>@font/autour_one</item>
         <item>@font/slackey</item>
         <item>@font/syncopate</item>
         <item>@font/wendy_one</item>

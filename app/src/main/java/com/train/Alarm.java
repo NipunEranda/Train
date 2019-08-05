@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -87,7 +86,7 @@ setTimer(calendar.getTimeInMillis());
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddAlarm()).addToBackStack(null).commit();
                 break;
             case R.id.viewAlarms:
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedAlarms()).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListedAlarms()).addToBackStack(null).commit();
                 break;
         }
     }

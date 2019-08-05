@@ -121,7 +121,6 @@
                         android:background="#004D40"
                         android:clickable="true"
                         android:gravity="center"
-                        android:onClick="nextLook"
                         android:text="Set Alarm" />
 
                     <Button

@@ -23,7 +23,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="40dp"
             android:background="@color/buttonColor"
-            android:text="Delete"
+            android:text="@string/deleteBtn"
             android:textColor="#FFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
-            android:text="set Arrival Time"
+            android:text="@string/arrivalLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/swap" />
 
@@ -46,7 +46,7 @@
             android:layout_height="30dp"
             android:layout_marginStart="40dp"
             android:background="@color/buttonColor"
-            android:text="Arrive"
+            android:text="@string/arrivalBtn"
             android:textColor="#FFF"
             app:layout_constraintBaseline_toBaselineOf="@+id/arrivalTimeTxt"
             app:layout_constraintStart_toStartOf="parent" />
@@ -117,7 +117,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="81dp"
-            android:text="Name"
+            android:text="@string/nameLabel"
             app:layout_constraintEnd_toStartOf="@+id/routeName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
             android:ems="10"
-            android:hint="Name for the route"
+            android:hint="@string/hint_enterRouteName"
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
             app:layout_constraintEnd_toEndOf="parent"
@@ -142,7 +142,8 @@
             android:layout_marginStart="127dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="40dp"
-            android:text="set Depart Time"
+            android:text="@string/departLabel"
+            android:textAlignment="viewEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/departTimeBtn"
             app:layout_constraintTop_toBottomOf="@+id/arrivalTimeTxt" />
@@ -154,7 +155,8 @@
             android:layout_marginStart="175dp"
             android:layout_marginTop="35dp"
             android:layout_marginEnd="40dp"
-            android:text="set Date"
+            android:text="@string/dateLabel"
+            android:textAlignment="viewEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/dateBtn"
             app:layout_constraintTop_toBottomOf="@+id/departTxt" />
@@ -166,7 +168,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="25dp"
             android:background="@color/buttonColor"
-            android:text="Depart"
+            android:text="@string/departBtn"
             android:textColor="#FFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/arrivalTimeBtn" />
@@ -178,7 +180,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="24dp"
             android:background="@color/buttonColor"
-            android:text="Date"
+            android:text="@string/dateBtn"
             android:textColor="#FFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/departTimeBtn" />
@@ -191,7 +193,7 @@
             android:layout_marginTop="44dp"
             android:layout_marginEnd="40dp"
             android:background="@color/buttonColor"
-            android:text="Edit"
+            android:text="@string/editBtn"
             android:textColor="#FFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

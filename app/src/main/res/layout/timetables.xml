@@ -5,7 +5,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/lightgrey">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -15,64 +15,113 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/viewAlarms"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:id="@+id/searchTimeTable"
+            android:layout_width="147dp"
+            android:layout_height="140dp"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="40dp"
-            android:background="@color/buttonColor"
-            android:text="Create Timetables"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="28dp"
+            android:background="@color/white"
+            android:drawableTop="@drawable/search"
+            android:fontFamily="@font/syncopate"
+            android:gravity="center|bottom"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:shadowRadius="0"
+            android:text="@string/searchBtn"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textDirection="firstStrongLtr"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/setAlarms" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <Button
-            android:id="@+id/editTimeTable"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="30dp"
+            android:id="@+id/createTimeTable"
+            android:layout_width="147dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="40dp"
-            android:background="@color/buttonColor"
-            android:text="edit timetables"
-            android:textColor="@android:color/white"
+            android:background="@color/white"
+            android:drawableTop="@drawable/create"
+            android:fontFamily="@font/syncopate"
+            android:gravity="center|bottom"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:shadowColor="#00000000"
+            android:text="@string/createBtn"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewAlarms" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <Button
-            android:id="@+id/setAlarms"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:id="@+id/userTimeTable"
+            android:layout_width="147dp"
+            android:layout_height="140dp"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="40dp"
-            android:background="@color/buttonColor"
-            android:text="Search Timetables"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginBottom="100dp"
+            android:background="@color/white"
+            android:drawableTop="@drawable/usertimetable"
+            android:fontFamily="@font/syncopate"
+            android:gravity="center|bottom"
+            android:paddingBottom="15dp"
+            android:text="@string/userTables"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/deleteTimeTable"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="30dp"
+            android:id="@+id/recentSearches"
+            android:layout_width="147dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="100dp"
-            android:background="@color/buttonColor"
-            android:text="Recent searches"
-            android:textColor="@android:color/white"
+            android:background="@color/white"
+            android:drawableTop="@drawable/recentsearch"
+            android:fontFamily="@font/syncopate"
+            android:gravity="center|bottom"
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp"
+            android:text="@string/recentSearches"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createTimeTable" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="253dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTimeTable" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/tablefragmentcover" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="197dp"
+            android:layout_height="153dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/appico" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/autour_one"
+            android:text="@string/menu_timeTables"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
