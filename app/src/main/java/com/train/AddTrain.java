@@ -61,7 +61,7 @@ public class AddTrain extends Fragment implements View.OnClickListener {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
+                                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewTrain()).addToBackStack(null).commit();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
