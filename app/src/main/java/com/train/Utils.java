@@ -8,6 +8,7 @@ import android.widget.Button;
 public class Utils {
 
     static Button disableBtn;
+    Button btn;
 
     public static void disableBtn(Button btn){
 
