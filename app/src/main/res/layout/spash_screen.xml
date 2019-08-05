@@ -28,7 +28,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
         android:fontFamily="@font/aclonica"
-        android:text="Train Schedule"
+        android:text="@string/splashTopic"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="35dp"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="17dp"
-        android:text="Created by THUNDERCATS"
+        android:text="@string/splashFooter"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

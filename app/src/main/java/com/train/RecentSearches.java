@@ -1,5 +1,6 @@
 package com.train;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class RecentSearches extends Fragment implements View.OnClickListener {
 
@@ -36,19 +39,16 @@ public class RecentSearches extends Fragment implements View.OnClickListener {
         viewRecentSearches = (Button) view.findViewById(R.id.recentViewBtn);
         clearRecentSearch = (Button) view.findViewById(R.id.clearRecentBtn);
         adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_single_choice, names);
-
         recentSearchList.setAdapter(adapter);
         deleteRecentSearches.setOnClickListener(this);
         viewRecentSearches.setOnClickListener(this);
         clearRecentSearch.setOnClickListener(this);
 
         if (adapter.getCount() == 0) {
-            adapter.add("lol1");
-            adapter.add("lol2");
-            adapter.add("lol3");
-            adapter.add("lol4");
-            adapter.add("lol5");
-            adapter.add("lol6");
+            adapter.add("Ambalangoda - Kollupitiya");
+            adapter.add("Kollupitiya - Ambalangoda");
+            adapter.add("Galle - Kollupitiya");
+            adapter.add("Kollupitiya - Galle");
         }else{
 
         }
@@ -89,7 +89,6 @@ public class RecentSearches extends Fragment implements View.OnClickListener {
         } else {
             adapter.remove(names.get(pos));
             adapter.notifyDataSetChanged();
-            Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
         }
     }
 

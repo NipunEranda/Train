@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
-            android:text="set Arrival Time"
+            android:text="@string/arrivalLabel"
             app:layout_constraintBaseline_toBaselineOf="@+id/arrivalTimeBtn"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -33,7 +33,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="100dp"
             android:background="@color/buttonColor"
-            android:text="Arrive"
+            android:text="@string/arrivalBtn"
             android:textColor="#FFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/endStation" />
@@ -104,7 +104,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="81dp"
-            android:text="Name"
+            android:text="@string/nameLabel"
             app:layout_constraintEnd_toStartOf="@+id/routeName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
             android:ems="10"
-            android:hint="Name for the route"
+            android:hint="@string/hint_enterRouteName"
             android:inputType="textPersonName"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
             app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
-            android:text="set Depart Time"
+            android:text="@string/departLabel"
             app:layout_constraintBaseline_toBaselineOf="@+id/departTimeBtn"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -136,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
-            android:text="set Date"
+            android:text="@string/dateLabel"
             app:layout_constraintBaseline_toBaselineOf="@+id/dateBtn"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -147,7 +147,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="24dp"
             android:background="@color/buttonColor"
-            android:text="Depart"
+            android:text="@string/departBtn"
             android:textColor="#FFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/arrivalTimeBtn" />
@@ -159,7 +159,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="24dp"
             android:background="@color/buttonColor"
-            android:text="Date"
+            android:text="@string/dateBtn"
             android:textColor="#FFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/departTimeBtn" />
@@ -173,7 +173,7 @@
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="100dp"
             android:background="@color/buttonColor"
-            android:text="Save"
+            android:text="@string/saveBtn"
             android:textColor="#FFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

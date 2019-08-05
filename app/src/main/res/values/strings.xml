@@ -3,9 +3,8 @@
     <string name="headerName">Train Schedule</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_title">ThunderCats</string>
+    <string name="nav_header_desc">SLIIT</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_timeTables">TimeTables</string>
@@ -14,6 +13,35 @@
     <string name="menu_alarms">Alarms</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="createBtn">Create</string>
+    <string name="searchBtn">Search</string>
+    <string name="userTables">User TimeTables</string>
+    <string name="recentSearches">Reacent Search</string>
+    <string name="nextTrainLabel">Next Train</string>
+    <string name="dailySchedule">Daily Schedule</string>
+    <string name="selectDateBtn">Select Date</string>
+    <string name="hint_selectDate">Select Date</string>
+    <string name="timeFilterLabel">Time Filter</string>
+    <string name="startTimeBtn">Start Time</string>
+    <string name="endTimeBtn">End Time</string>
+    <string name="startTimeLabel">Set Start Time</string>
+    <string name="endTimeLabel">Set End Time</string>
+    <string name="searchResultLabel">SEARCH RESULTS</string>
+    <string name="splashTopic">Train Schedule</string>
+    <string name="splashFooter">Created by THUNDERCATS</string>
+    <string name="viewBtn">view</string>
+    <string name="deleteBtn">Delete</string>
+    <string name="clearBtn">Clear</string>
+    <string name="hint_enterRouteName">Name for the route</string>
+    <string name="nameLabel">Name</string>
+    <string name="arrivalBtn">Arrive</string>
+    <string name="departBtn">Depart</string>
+    <string name="dateBtn">Date</string>
+    <string name="arrivalLabel">Set Arrival Time</string>
+    <string name="departLabel">Set Depart Time</string>
+    <string name="dateLabel">Set Date</string>
+    <string name="editBtn">Edit</string>
+    <string name="saveBtn">Save</string>
 
     <string-array name="startStations">
         <item>Select Start Station :</item>

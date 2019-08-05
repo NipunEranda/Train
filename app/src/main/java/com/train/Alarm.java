@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -22,8 +21,8 @@ public class Alarm extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.alarms, container, false);
-        setAlarms = (Button)view.findViewById(R.id.setAlarms);
-        viewAlarms = (Button)view.findViewById(R.id.viewAlarms);
+        setAlarms = (Button)view.findViewById(R.id.searchTimeTable);
+        viewAlarms = (Button)view.findViewById(R.id.createTimeTable);
         setAlarms.setOnClickListener(this);
         viewAlarms.setOnClickListener(this);
 
@@ -83,10 +82,10 @@ setTimer(calendar.getTimeInMillis());
     public void onClick(View view) {
 
         switch (view.getId()){
-            case R.id.setAlarms:
+            case R.id.searchTimeTable:
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddAlarm()).addToBackStack(null).commit();
                 break;
-            case R.id.viewAlarms:
+            case R.id.createTimeTable:
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SavedAlarms()).addToBackStack(null).commit();
                 break;
         }
