@@ -37,7 +37,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="103dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp">
 
                 <TextView
                     android:id="@+id/textView"
@@ -86,7 +88,9 @@
                     android:background="#004D40"
                     android:gravity="center"
                     android:text="Alarm Name"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
+                    android:layout_marginBottom="30dp"
                     app:fontFamily="sans-serif-condensed-medium" />
 
                 <EditText
@@ -99,13 +103,24 @@
                     android:hint="Enter Alarm Name"
                     android:inputType="textPersonName" />
 
-
-                <TimePicker
-                    android:id="@+id/timePicker"
+                <Button
+                    android:id="@+id/setClock"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    android:headerBackground="@color/colorPrimary"
-                    android:timePickerMode="clock" />
+                    android:layout_height="wrap_content"
+                    android:background="#004D40"
+                    android:text="Set Time"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp" />
+
+                <TextView
+                    android:id="@+id/setAlarmTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Set Time"
+                    android:layout_marginBottom="50dp"
+                    android:textAlignment="center"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,7 +136,8 @@
                         android:background="#004D40"
                         android:clickable="true"
                         android:gravity="center"
-                        android:text="Set Alarm" />
+                        android:text="Set Alarm"
+                        android:textColor="@color/white" />
 
                     <Button
                         android:id="@+id/button2"
@@ -131,7 +147,8 @@
                         android:layout_weight="1"
                         android:background="#004D40"
                         android:gravity="center"
-                        android:text="Cancel" />
+                        android:text="Cancel"
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
             </LinearLayout>

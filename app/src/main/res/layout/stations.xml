@@ -2,25 +2,98 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_light">
+    android:background="@android:color/white"
+    >
 
     <Button
-        android:id="@+id/searchTrainStation"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/addStation"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/white"
+        android:ellipsize="none"
+        android:fontFamily="@font/syncopate"
+        android:gravity="center|bottom"
+        android:paddingBottom="30dp"
+        android:paddingTop="15dp"
+        android:text="Add Station"
+        android:textColor="@color/black"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editStation"
+        app:layout_constraintStart_toStartOf="parent"
+        android:drawableTop="@drawable/create"/>
+
+    <Button
+        android:id="@+id/editStation"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="224dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:fontFamily="@font/syncopate"
+        android:gravity="center|bottom"
+        android:paddingBottom="30dp"
+        android:paddingTop="15dp"
+        android:text="Edit Station"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:drawableTop="@drawable/edit"/>
+
+    <Button
+        android:id="@+id/searchStations"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/white"
+        android:fontFamily="@font/syncopate"
+        android:gravity="center|bottom"
+        android:paddingBottom="30dp"
+        android:paddingTop="15dp"
+        android:text="Search Stations"
+        android:textColor="@color/black"
+        app:layout_constraintBaseline_toBaselineOf="@+id/deleteStations"
+        app:layout_constraintStart_toStartOf="parent"
+        android:drawableTop="@drawable/search"/>
+
+    <Button
+        android:id="@+id/deleteStations"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/white"
+        android:fontFamily="@font/syncopate"
+        android:gravity="center|bottom"
+        android:paddingBottom="30dp"
+        android:paddingTop="15dp"
+        android:text="Delete Stations"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editStation"
+        android:drawableTop="@drawable/delete"/>
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="match_parent"
+        android:layout_height="253dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.225"
-        tools:layout_conversion_wrapHeight="126"
-        tools:layout_conversion_wrapWidth="231" />
+        app:srcCompat="@drawable/stationfragmentcover" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="197dp"
+        android:layout_height="161dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="50dp"
+        android:src="@drawable/station"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
