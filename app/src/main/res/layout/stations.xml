@@ -46,33 +46,34 @@
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:background="@color/white"
+        android:drawableTop="@drawable/search"
         android:fontFamily="@font/syncopate"
         android:gravity="center|bottom"
-        android:paddingBottom="30dp"
         android:paddingTop="15dp"
+        android:paddingBottom="30dp"
         android:text="Search Stations"
         android:textColor="@color/black"
-        app:layout_constraintBaseline_toBaselineOf="@+id/deleteStations"
         app:layout_constraintStart_toStartOf="parent"
-        android:drawableTop="@drawable/search"/>
+        app:layout_constraintTop_toBottomOf="@+id/addStation" />
 
     <Button
         android:id="@+id/deleteStations"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@color/white"
+        android:drawableTop="@drawable/delete"
         android:fontFamily="@font/syncopate"
         android:gravity="center|bottom"
-        android:paddingBottom="30dp"
         android:paddingTop="15dp"
+        android:paddingBottom="30dp"
         android:text="Delete Stations"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editStation"
-        android:drawableTop="@drawable/delete"/>
+        app:layout_constraintTop_toBottomOf="@+id/editStation" />
 
     <ImageView
         android:id="@+id/imageView6"

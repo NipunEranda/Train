@@ -46,9 +46,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/mediumGreen"
                     android:gravity="center"
                     android:text="Arrival - Depature"
+                    android:textColor="@color/white"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:fontFamily="sans-serif-condensed-medium" />
 
@@ -57,9 +58,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/mediumGreen"
                     android:gravity="center"
                     android:text="00.00 - 00.00"
+                    android:textColor="@color/white"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:fontFamily="sans-serif-condensed-medium" />
 
@@ -68,9 +70,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/mediumGreen"
                     android:gravity="center"
                     android:text="Gampha to Colombo"
+                    android:textColor="@color/white"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:fontFamily="sans-serif-condensed-medium" />
             </LinearLayout>

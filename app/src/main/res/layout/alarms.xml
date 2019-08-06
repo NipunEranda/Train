@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@color/lightgrey">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -18,33 +17,79 @@
 
         <Button
             android:id="@+id/viewAlarms"
-            android:layout_width="331dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="46dp"
+            android:layout_width="147dp"
+            android:layout_height="140dp"
             android:layout_marginEnd="40dp"
-            android:background="@color/buttonColor"
+            android:background="@color/white"
+            android:drawableTop="@drawable/viewalarm"
+            android:fontFamily="@font/syncopate"
+            android:gravity="center|bottom"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:shadowRadius="0"
             android:text="view alarms"
-            android:textColor="@android:color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/setAlarms" />
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textDirection="firstStrongLtr"
+            app:layout_constraintBaseline_toBaselineOf="@+id/setAlarms"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
         <Button
             android:id="@+id/setAlarms"
-            android:layout_width="331dp"
-            android:layout_height="60dp"
+            android:layout_width="147dp"
+            android:layout_height="140dp"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="40dp"
-            android:background="@color/buttonColor"
+            android:layout_marginTop="76dp"
+            android:background="@color/white"
+            android:drawableTop="@drawable/alarmadd"
+            android:fontFamily="@font/syncopate"
+            android:gravity="center|bottom"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:shadowRadius="0"
             android:text="set alarms"
-            android:textColor="@android:color/white"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textDirection="firstStrongLtr"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="253dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/alarmfragmentcover" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="121dp"
+            android:layout_height="133dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView6"
+            app:layout_constraintStart_toStartOf="@+id/imageView6"
+            app:layout_constraintTop_toTopOf="@+id/imageView6"
+            app:srcCompat="@drawable/alarm" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/autour_one"
+            android:text="@string/menu_alarms"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

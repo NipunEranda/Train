@@ -11,5 +11,9 @@
     <color name="darkOrange">#FF4500</color>
     <color name="mediumOrange">#FF8C00</color>
     <color name="lightOrange">	#FFA500</color>
+    <color name="darkGreen">#006400</color>
+    <color name="mediumGreen">#228B22</color>
+    <color name="lightGreen">#32CD32</color>
+    <color name="red">#F02828</color>
 
 </resources>
