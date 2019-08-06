@@ -20,7 +20,6 @@ public class Train extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.trains, container, false);
         addTBtn = view.findViewById(R.id.addTbtn);
         addTBtn.setOnClickListener(this);
-
         viewBtn = view.findViewById(R.id.viewTbtn);
         viewBtn.setOnClickListener(this);
         return view;
