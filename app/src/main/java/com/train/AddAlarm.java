@@ -17,6 +17,8 @@ import org.w3c.dom.Text;
 
 public class AddAlarm extends Fragment implements View.OnClickListener {
 
+    //the first change by sachintha
+
     Button setClock, setAlarmBtn;
     TextView setAlarmTime;
     View view;
