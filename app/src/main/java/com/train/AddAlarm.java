@@ -19,6 +19,7 @@ public class AddAlarm extends Fragment implements View.OnClickListener {
 
     //the first change by sachintha
     //next
+    //next 2
 
     Button setClock, setAlarmBtn;
     TextView setAlarmTime;
