@@ -54,7 +54,7 @@
         android:layout_marginTop="150dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:hint="Name of the Station"
+        android:hint="@string/nameofStation"
         android:inputType="textPersonName"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"

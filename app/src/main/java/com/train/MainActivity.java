@@ -1,6 +1,5 @@
 package com.train;
 
-
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 

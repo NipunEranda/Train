@@ -1,5 +1,7 @@
-package com.train;
+package com.train.utils;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.widget.ArrayAdapter;
@@ -24,6 +26,14 @@ public class Utils {
         btn.setBackgroundColor(Color.parseColor("#357EC7"));
         btn.setTextColor(Color.parseColor("#FFFFFF"));
 
+    }
+
+    public static void showMessage(String title, String Message, Context context){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(Message);
+        builder.show();
     }
 
 }

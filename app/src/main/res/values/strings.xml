@@ -42,6 +42,8 @@
     <string name="dateLabel">Set Date</string>
     <string name="editBtn">Edit</string>
     <string name="saveBtn">Save</string>
+    <string name="enterName">Enter alarm Name</string>
+    <string name="nameofStation">Name of the Station</string>
 
     <string-array name="startStations">
         <item>Select Start Station :</item>

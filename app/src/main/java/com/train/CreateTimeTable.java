@@ -11,16 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.train.adapters.TimeTableAdapter;
+import com.train.utils.DatabaseHelper;
+
+import java.util.ArrayList;
+
 public class CreateTimeTable extends Fragment implements View.OnClickListener {
 
+    DatabaseHelper trainDB;
     Spinner startStation, endStation, trainType;
     Button arrivalBtn, departBtn,dateBtn, saveBtn;
     TextView arrivalTimeTxt, departTimeTxt, dateTxt;
     View view;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.create_time_table, container, false);
@@ -36,6 +44,8 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
         departBtn.setOnClickListener(this);
         dateBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
+        trainDB = new DatabaseHelper(getContext());
+
 
         return view;
     }
@@ -83,6 +93,8 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).addToBackStack(null).commit();
                 break;
+
         }
     }
+
 }

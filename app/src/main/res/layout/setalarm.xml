@@ -103,7 +103,7 @@
                     android:layout_marginTop="5dp"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="Enter Alarm Name"
+                    android:hint="@string/enterName"
                     android:inputType="textPersonName" />
 
                 <Button
