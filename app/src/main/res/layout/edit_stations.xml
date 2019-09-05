@@ -42,13 +42,13 @@
         android:text="Station Name  :"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editText"
-        app:layout_constraintEnd_toStartOf="@+id/editText"
+        app:layout_constraintBaseline_toBaselineOf="@+id/alarmName"
+        app:layout_constraintEnd_toStartOf="@+id/alarmName"
         app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/alarmName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
@@ -85,7 +85,7 @@
         android:inputType="textPersonName"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/alarmName" />
 
     <Button
         android:id="@+id/button"
