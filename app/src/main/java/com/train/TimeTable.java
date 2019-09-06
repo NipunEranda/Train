@@ -1,6 +1,7 @@
 package com.train;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.train.utils.DatabaseHelper;
+
 public class TimeTable extends Fragment implements View.OnClickListener {
 
-
+    DatabaseHelper trainDB;
     Button searchTimeTable, createTimeTable, editTimeTable, deleteTimeTable;
     TextView searchText;
     @Nullable
@@ -29,6 +32,8 @@ public class TimeTable extends Fragment implements View.OnClickListener {
         editTimeTable.setOnClickListener(this);
         deleteTimeTable = (Button) view.findViewById(R.id.recentSearches);
         deleteTimeTable.setOnClickListener(this);
+
+        trainDB = new DatabaseHelper(getContext());
 
         return view;
     }

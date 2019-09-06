@@ -24,6 +24,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DEPART_TIME = "DEPART_TIME";
     public static final String TIMETABLE_DATE = "TIMETABLE_DATE";
     public static final String TIMETABLE_TRAIN_ID = "TRAIN_ID";
+
+    String startStation;
     /**/
 
     /*TRAIN DETAILS*/
@@ -80,6 +82,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
+    }
+
+    public boolean insertAStation(String stationName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(STATION_NAME, stationName);
+        long result = db.insert(TABLE_STATION, null, contentValues);
+        if(result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean insertATrain(String trainName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TRAIN_NAME, trainName);
+        long result = db.insert(TABLE_TRAIN, null, contentValues);
+        if(result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public String getStationName(int i){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_STATION + " where " + STATION_ID + " = " + i, null);
+        while (res.moveToNext()) {
+            if (res.getCount() == 0) {
+                startStation = "";
+            } else {
+                startStation = res.getString(1);
+            }
+        }
+        return startStation;
     }
 
     public Cursor getAllTimeTables(){

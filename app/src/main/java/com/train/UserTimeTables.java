@@ -1,5 +1,6 @@
 package com.train;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,11 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.train.adapters.TimeTableAdapter;
+import com.train.utils.DatabaseHelper;
+import com.train.utils.Utils;
 
 import java.util.ArrayList;
 
 public class UserTimeTables extends Fragment implements AdapterView.OnItemClickListener{
 
+    DatabaseHelper trainDB;
     ListView trainTimeTableListView;
     ArrayList<TrainTimeTable> trainTimeTable = new ArrayList<>();
 
@@ -31,7 +35,6 @@ public class UserTimeTables extends Fragment implements AdapterView.OnItemClickL
         View view = inflater.inflate(R.layout.user_time_table, container, false);
 
         trainTimeTableListView = view.findViewById(R.id.userTimeTableList);
-
         return view;
     }
 
@@ -40,18 +43,17 @@ public class UserTimeTables extends Fragment implements AdapterView.OnItemClickL
         super.onResume();
         ((MainActivity) getActivity())
                 .setActionBarTitle("User Timetables");
-        TrainTimeTable train1 = new TrainTimeTable();
-        train1.setTimeTableName("lol");
-        train1.setStartStation(0);
-        train1.setEndStation(1);
+        trainDB = new DatabaseHelper(getContext());
+        Cursor res = trainDB.getAllTimeTables();
+        if(res.getCount() == 0){
+            Utils.showMessage("Error", "Nothing found", getContext());
+        }else{
+            while (res.moveToNext()){
+                TrainTimeTable timetable = new TrainTimeTable(res.getString(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7));
+                trainTimeTable.add(timetable);
+            }
+        }
 
-        TrainTimeTable train2 = new TrainTimeTable();
-        train2.setTimeTableName("lol");
-        train2.setStartStation(0);
-        train2.setEndStation(1);
-
-        trainTimeTable.add(train1);
-        trainTimeTable.add(train2);
         fillListView();
     }
 
