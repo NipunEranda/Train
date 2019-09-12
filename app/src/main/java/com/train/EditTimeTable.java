@@ -1,5 +1,6 @@
 package com.train;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,26 +10,43 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.train.utils.DatabaseHelper;
+import com.train.utils.getDateTime;
+
 public class EditTimeTable extends Fragment implements View.OnClickListener {
 
-    Spinner startStation, endStation, trainType;
-    Button arrivalBtn, departBtn,dateBtn, saveBtn;
+    TrainTimeTable trainTimeTable;
+    String stationsArray[], trainsArray[];
+    Spinner startStationSpinner, endStationSpinner, trainIdSpinner;
+    Button arrivalBtn, departBtn,dateBtn, saveBtn, swapBtn;
     TextView arrivalTimeTxt, departTimeTxt, dateTxt;
     View view;
+    EditText tableName;
+    DatabaseHelper trainDB;
+
+    String routeName;
+    int startStation;
+    int endStation;
+    String arrivalTime;
+    String departTime;
+    String date;
+    int trainId;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.edit_time_table, container, false);
 
+        tableName = view.findViewById(R.id.routeName);
         arrivalBtn = (Button) view.findViewById(R.id.arrivalTimeBtn);
         departBtn = (Button) view.findViewById(R.id.departTimeBtn);
         dateBtn = (Button) view.findViewById(R.id.dateBtn);
-        saveBtn = (Button) view.findViewById(R.id.editBtn);
+        saveBtn = (Button) view.findViewById(R.id.saveBtn);
+        swapBtn = (Button)view.findViewById(R.id.swapBtn);
         arrivalTimeTxt = (TextView)view.findViewById(R.id.arrivalTimeTxt);
         departTimeTxt = (TextView)view.findViewById(R.id.departTxt);
         dateTxt = (TextView)view.findViewById(R.id.dateTxt);
@@ -36,34 +54,44 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
         departBtn.setOnClickListener(this);
         dateBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
+        swapBtn.setOnClickListener(this);
+        trainDB = new DatabaseHelper(getContext());
+
 
         return view;
+    }
+
+    public EditTimeTable(TrainTimeTable trainTimeTable) {
+        this.trainTimeTable = trainTimeTable;
+    }
+
+    public EditTimeTable() {
     }
 
     public void onResume() {
         super.onResume();
         ((MainActivity) getActivity())
-                .setActionBarTitle("Edit Timetables");
+                .setActionBarTitle("View Timetables");
 
-        startStation = view.findViewById(R.id.startStation);
-        endStation = view.findViewById(R.id.endStation);
-        trainType = view.findViewById(R.id.trainType);
+        startStationSpinner = view.findViewById(R.id.startStation);
+        endStationSpinner = view.findViewById(R.id.endStation);
+        trainIdSpinner = view.findViewById(R.id.trainId);
 
-        ArrayAdapter<String> startStationAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.startStations));
-        startStationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        startStation.setAdapter(startStationAdapter);
+        stationsArray = getResources().getStringArray(R.array.defaultStations);
+        trainsArray = getResources().getStringArray(R.array.defaultTrains);
 
+        trainDB.loadStations(startStationSpinner, stationsArray);
+        trainDB.loadStations(endStationSpinner, stationsArray);
+        trainDB.loadTrains(trainIdSpinner, trainsArray);
 
-        ArrayAdapter<String> endStationAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.endStations));
-        endStationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        endStation.setAdapter(endStationAdapter);
+        tableName.setText(trainTimeTable.getTimeTableName());
+        startStationSpinner.setSelection(trainTimeTable.getStartStation());
+        endStationSpinner.setSelection(trainTimeTable.getEndStation());
+        arrivalTimeTxt.setText(trainTimeTable.getArrivalTime());
+        departTimeTxt.setText(trainTimeTable.getDepartTime());
+        dateTxt.setText(trainTimeTable.getTrainDate());
+        trainIdSpinner.setSelection(trainTimeTable.getTrainId());
 
-        ArrayAdapter<String> trainTypeAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.trainTypes));
-        trainTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        trainType.setAdapter(trainTypeAdapter);
 
     }
 
@@ -79,7 +107,12 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
             case R.id.dateBtn:
                 getDateTime.getDateView(getContext(), dateTxt);
                 break;
-            case R.id.editBtn:
+            case R.id.swapBtn:
+                int temp = startStationSpinner.getSelectedItemPosition();
+                startStationSpinner.setSelection(endStationSpinner.getSelectedItemPosition());
+                endStationSpinner.setSelection(temp);
+                break;
+            case R.id.saveBtn:
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).addToBackStack(null).commit();
                 break;

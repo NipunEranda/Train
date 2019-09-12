@@ -1,4 +1,4 @@
-package com.train;
+package com.train.utils;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.IntegerRes;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class getDateTime {
@@ -16,7 +19,9 @@ public class getDateTime {
     static TextView output;
     static int mHour, mMinute;
     static String month, hour, Minute;
-    public static void getDateView(Context context, TextView date){
+    static int dateArray[] = new int[3];
+
+    public static int[] getDateView(Context context, final TextView date){
 
         Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
@@ -58,10 +63,13 @@ public class getDateTime {
                         }
 
                         output.setText(dayOfMonth + "-" + (month) + "-" + year);
+                        dateArray[0] = dayOfMonth;
+                        dateArray[1] = (monthOfYear + 1);
+                        dateArray[2] = year;
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
-
+        return dateArray;
     }
 
 

@@ -9,23 +9,23 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.train.adapters.TimeTableAdapter;
 import com.train.utils.DatabaseHelper;
+import com.train.utils.getDateTime;
 
 import java.util.ArrayList;
 
 public class CreateTimeTable extends Fragment implements View.OnClickListener {
 
+    int[] date;
+    String stationsArray[], trainsArray[];
     DatabaseHelper trainDB;
-    Spinner startStation, endStation, trainId;
-    Button arrivalBtn, departBtn,dateBtn, saveBtn;
+    Spinner startStationSpinner, endStationSpinner, trainIdSpinner;
+    Button arrivalBtn, departBtn,dateBtn, saveBtn, swapBtn;
     TextView arrivalTimeTxt, departTimeTxt, dateTxt, routeName;
     View view;
 
@@ -37,18 +37,27 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
         arrivalBtn = (Button) view.findViewById(R.id.arrivalTimeBtn);
         departBtn = (Button) view.findViewById(R.id.departTimeBtn);
         dateBtn = (Button) view.findViewById(R.id.dateBtn);
-        saveBtn = (Button) view.findViewById(R.id.editBtn);
+        saveBtn = (Button) view.findViewById(R.id.saveBtn);
         arrivalTimeTxt = (TextView)view.findViewById(R.id.arrivalTimeTxt);
         departTimeTxt = (TextView)view.findViewById(R.id.departTxt);
         dateTxt = (TextView)view.findViewById(R.id.dateTxt);
-        startStation = view.findViewById(R.id.startStation);
-        endStation = view.findViewById(R.id.endStation);
-        trainId = view.findViewById(R.id.trainType);
+        startStationSpinner = view.findViewById(R.id.startStation);
+        endStationSpinner = view.findViewById(R.id.endStation);
+        trainIdSpinner = view.findViewById(R.id.trainType);
+        swapBtn = view.findViewById(R.id.swapBtn);
         arrivalBtn.setOnClickListener(this);
         departBtn.setOnClickListener(this);
         dateBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
+        swapBtn.setOnClickListener(this);
         trainDB = new DatabaseHelper(getContext());
+
+        stationsArray = getResources().getStringArray(R.array.defaultStations);
+        trainsArray = getResources().getStringArray(R.array.defaultTrains);
+
+        trainDB.loadStations(startStationSpinner, stationsArray);
+        trainDB.loadStations(endStationSpinner, stationsArray);
+        trainDB.loadTrains(trainIdSpinner, trainsArray);
 
         return view;
     }
@@ -57,23 +66,6 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
         super.onResume();
         ((MainActivity) getActivity())
                 .setActionBarTitle("Create Timetables");
-
-        ArrayAdapter<String> startStationAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.startStations));
-        startStationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        startStation.setAdapter(startStationAdapter);
-
-
-        ArrayAdapter<String> endStationAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.endStations));
-        endStationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        endStation.setAdapter(endStationAdapter);
-
-        ArrayAdapter<String> trainTypeAdapter = new ArrayAdapter<String>(this.getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.trainTypes));
-        trainTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        trainId.setAdapter(trainTypeAdapter);
-
     }
 
     @Override
@@ -86,10 +78,11 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
                 getDateTime.getTimeView(getContext(), departTimeTxt);
                 break;
             case R.id.dateBtn:
-                getDateTime.getDateView(getContext(), dateTxt);
+                date = getDateTime.getDateView(getContext(), dateTxt);
                 break;
-            case R.id.editBtn:
-                boolean isInserted = trainDB.insertATimeTable(routeName.getText().toString(), startStation.getSelectedItemPosition(), endStation.getSelectedItemPosition(), arrivalTimeTxt.getText().toString(), departTimeTxt.getText().toString(), dateTxt.getText().toString(), trainId.getSelectedItemPosition());
+            case R.id.saveBtn:
+                String dateText = String.valueOf(date[0]) + "-" + String.valueOf(date[1]) + "-" + String.valueOf(date[2]);
+                boolean isInserted = trainDB.insertATimeTable(routeName.getText().toString(), startStationSpinner.getSelectedItemPosition(), endStationSpinner.getSelectedItemPosition(), arrivalTimeTxt.getText().toString(), departTimeTxt.getText().toString(), dateText, trainIdSpinner.getSelectedItemPosition());
                 if(isInserted){
                     Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).addToBackStack(null).commit();
@@ -98,7 +91,14 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
                 }
                 break;
 
+            case R.id.swapBtn:
+                int temp = startStationSpinner.getSelectedItemPosition();
+                startStationSpinner.setSelection(endStationSpinner.getSelectedItemPosition());
+                endStationSpinner.setSelection(temp);
+                break;
+
         }
     }
+
 
 }

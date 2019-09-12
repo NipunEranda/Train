@@ -9,6 +9,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.train.utils.DatabaseHelper;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    DatabaseHelper trainDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,10 @@ public class MainActivity extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_timeTables);
         }
 
+        trainDB = new DatabaseHelper(getApplicationContext());
+        trainDB.setDefaultTrains();
+        trainDB.setDefaultStations();
+        trainDB.setDefaultTimeTables();
 
     }
 

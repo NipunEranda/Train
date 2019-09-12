@@ -1,6 +1,7 @@
 package com.train;
 
-import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,48 +11,52 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.train.utils.DatabaseHelper;
+import com.train.utils.Utils;
 
-import static android.widget.Toast.LENGTH_SHORT;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecentSearches extends Fragment implements View.OnClickListener {
 
+    DatabaseHelper trainDB;
     ListView recentSearchList;
-    ArrayList<String> names = new ArrayList<String>();
-    ArrayAdapter<String> adapter;
-    Button viewRecentSearches, deleteRecentSearches, clearRecentSearch;
-
+    ArrayList<TrainTimeTable> trainTimeTable = new ArrayList<>();
+    RecentSearchAdapter adapter;
+    Button viewRecentSearches, clearRecentSearch;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recent_searches, container, false);
 
-        deleteRecentSearches = (Button) view.findViewById(R.id.recentViewDeleteBtn);
-        recentSearchList = (ListView) view.findViewById(R.id.listView1);
+        recentSearchList = (ListView) view.findViewById(R.id.recentSearchesView);
         viewRecentSearches = (Button) view.findViewById(R.id.recentViewBtn);
         clearRecentSearch = (Button) view.findViewById(R.id.clearRecentBtn);
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_single_choice, names);
-        recentSearchList.setAdapter(adapter);
-        deleteRecentSearches.setOnClickListener(this);
         viewRecentSearches.setOnClickListener(this);
         clearRecentSearch.setOnClickListener(this);
 
-        if (adapter.getCount() == 0) {
-            adapter.add("Ambalangoda - Kollupitiya");
-            adapter.add("Kollupitiya - Ambalangoda");
-            adapter.add("Galle - Kollupitiya");
-            adapter.add("Kollupitiya - Galle");
-        }else{
+        trainDB = new DatabaseHelper(getContext());
 
+        Cursor res = trainDB.getAllRecentTables();
+        if(res.getCount() == 0){
+            Utils.showMessage("", "No Recent Searches", getContext());
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).addToBackStack(null).commit();
+        }else {
+            if (recentSearchList.getCount() == 0) {
+                fillListView();
+            }
         }
+
+        adapter = new RecentSearchAdapter(getContext(), R.layout.recent_searches_listview_item, trainTimeTable);
+        recentSearchList.setAdapter(adapter);
 
         return view;
     }
@@ -67,40 +72,73 @@ public class RecentSearches extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.recentViewBtn:
-                view();
-                break;
-
-            case R.id.recentViewDeleteBtn:
-                delete();
+            case R.id.recentSearchesView:
+                fillListView();
                 break;
 
             case R.id.clearRecentBtn:
-                clear();
+                clearAll();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecentSearches()).addToBackStack(null).commit();
                 break;
         }
     }
 
-    private void delete() {
-        int pos = recentSearchList.getCheckedItemPosition();
+    public void fillListView(){
 
-        if (pos < 0 || adapter.getCount() <= 0) {
+        Cursor res = trainDB.getAllRecentTables();
 
-        } else {
-            adapter.remove(names.get(pos));
-            adapter.notifyDataSetChanged();
+        if(!res.moveToFirst()){
+            res = trainDB.getAllRecentTables();
         }
+        do{
+            Cursor tables = trainDB.getATimeTable(res.getInt(1));
+            while (tables.moveToNext()){
+                TrainTimeTable timeTable = new TrainTimeTable(tables.getInt(0), tables.getString(1), tables.getInt(2), tables.getInt(3), tables.getString(4), tables.getString(5), tables.getString(6), tables.getInt(7));
+                trainTimeTable.add(timeTable);
+            }
+        }while (res.moveToNext());
+
     }
 
-    private void clear() {
-        adapter.clear();
+    public void clearAll(){
+        boolean res = trainDB.deleteAllRecentTable();
     }
 
-    private void view() {
+    public class RecentSearchAdapter extends ArrayAdapter<TrainTimeTable>{
 
-        if (recentSearchList.getCheckedItemPosition() < 0 || adapter.getCount() <= 0) {
-        } else {
-            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditTimeTable()).addToBackStack(null).commit();
+        ArrayList<TrainTimeTable> timetables;
+
+        public RecentSearchAdapter(@NonNull Context context, int resource, ArrayList<TrainTimeTable> timeTables) {
+            super(context, resource, timeTables);
+            this.timetables = timeTables;
+        }
+
+        @NonNull
+        @Override
+        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View view = null;
+            LayoutInflater inflater = getLayoutInflater();
+            view = inflater.inflate(R.layout.recent_searches_listview_item, parent, false);
+
+            TextView timeTableName = view.findViewById(R.id.recentTimeTableName);
+            TextView startStation = view.findViewById(R.id.recentTimeTableStartStation);
+            TextView endStation = view.findViewById(R.id.recentTimeTableEndStation);
+            Button delete = view.findViewById(R.id.recentTableDeleteBtn);
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    timetables.remove(position);
+                    adapter.notifyDataSetChanged();
+                    trainDB.deleteRecentTable(""+(position + 1));
+                    Toast.makeText(getContext(), "Item Deleted", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            timeTableName.setText(timetables.get(position).getTimeTableName());
+            startStation.setText(trainDB.getStationName(timetables.get(position).getStartStation()));
+            endStation.setText(trainDB.getStationName(timetables.get(position).getEndStation()));
+            return view;
         }
     }
 }

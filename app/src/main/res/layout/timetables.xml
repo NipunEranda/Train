@@ -38,7 +38,6 @@
             android:id="@+id/createTimeTable"
             android:layout_width="147dp"
             android:layout_height="140dp"
-            android:layout_marginTop="28dp"
             android:layout_marginEnd="40dp"
             android:background="@color/white"
             android:drawableTop="@drawable/create"
@@ -49,15 +48,14 @@
             android:shadowColor="#00000000"
             android:text="@string/createBtn"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/searchTimeTable"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/userTimeTable"
             android:layout_width="147dp"
             android:layout_height="140dp"
             android:layout_marginStart="40dp"
-            android:layout_marginBottom="100dp"
             android:background="@color/white"
             android:drawableTop="@drawable/usertimetable"
             android:fontFamily="@font/syncopate"
@@ -65,7 +63,7 @@
             android:paddingBottom="15dp"
             android:text="@string/userTables"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/recentSearches"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button

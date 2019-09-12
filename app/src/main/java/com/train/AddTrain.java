@@ -44,7 +44,7 @@ public class AddTrain extends Fragment implements View.OnClickListener {
 
 
         ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this.getActivity(),
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.trainTypes));
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defaultTrains));
         mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(mAdapter);
 

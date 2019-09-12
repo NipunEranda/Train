@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.train.R;
+import com.train.RecentSearches;
 import com.train.TrainTimeTable;
 import com.train.utils.DatabaseHelper;
 
@@ -18,14 +20,14 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class TimeTableAdapter extends BaseAdapter {
+public class RecentSearchesAdapter extends BaseAdapter{
 
     DatabaseHelper trainDB;
     Context context;
     ArrayList<TrainTimeTable> trainTimeTable = new ArrayList<>();
     String startStation;
 
-    public TimeTableAdapter(Context context, ArrayList<TrainTimeTable> trainTimeTable){
+    public RecentSearchesAdapter(Context context, ArrayList<TrainTimeTable> trainTimeTable){
         this.context = context;
         this.trainTimeTable = trainTimeTable;
         setDB(context);
@@ -51,20 +53,33 @@ public class TimeTableAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         if(view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.train_timetable_listview_item, viewGroup, false);
+            view = LayoutInflater.from(context).inflate(R.layout.recent_searches_listview_item, viewGroup, false);
         }
 
-        TrainTimeTable timeTable = (TrainTimeTable)getItem(i);
+        final TrainTimeTable timeTable = (TrainTimeTable)getItem(i);
 
-        TextView timeTableName = view.findViewById(R.id.timeTableName);
-        TextView startStation = view.findViewById(R.id.timeTableStartStation);
-        TextView endStation = view.findViewById(R.id.timeTableEndStation);
+        TextView timeTableName = view.findViewById(R.id.recentTimeTableName);
+        TextView startStation = view.findViewById(R.id.recentTimeTableStartStation);
+        TextView endStation = view.findViewById(R.id.recentTimeTableEndStation);
+        final Button delete = view.findViewById(R.id.recentTableDeleteBtn);
 
         timeTableName.setText(timeTable.getTimeTableName());
         startStation.setText(trainDB.getStationName(timeTable.getStartStation()));
         endStation.setText(trainDB.getStationName(timeTable.getEndStation()));
+        delete.setId(timeTable.getTimeTableId());
+        delete.setText(""+delete.getId());
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //trainTimeTable.remove(i);
+                Toast.makeText(context, String.valueOf(delete.getId()), Toast.LENGTH_SHORT).show();
+                //trainDB.deleteRecentTable(String.valueOf(delete.getId()));
+                //notifyDataSetChanged();
+            }
+        });
 
         return view;
     }

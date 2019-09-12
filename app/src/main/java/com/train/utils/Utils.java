@@ -6,6 +6,10 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Utils {
 
@@ -36,4 +40,10 @@ public class Utils {
         builder.show();
     }
 
+    public static String getCurrentTime(Context context) {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm");
+        String strDate = "Current Time : " + mdformat.format(calendar.getTime());
+        return strDate;
+    }
 }

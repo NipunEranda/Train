@@ -2,6 +2,7 @@ package com.train;
 
 public class TrainTimeTable {
 
+    int timeTableId;
     String timeTableName;
     int startStation;
     int endStation;
@@ -9,11 +10,13 @@ public class TrainTimeTable {
     String departTime;
     String trainDate;
     int trainId;
+    static int SELECTEDTIMETABLE;
 
     public TrainTimeTable() {
     }
 
-    public TrainTimeTable(String timeTableName, int startStation, int endStation, String arrivalTime, String departTime, String trainDate, int trainId) {
+    public TrainTimeTable(int timeTableId, String timeTableName, int startStation, int endStation, String arrivalTime, String departTime, String trainDate, int trainId) {
+        this.timeTableId = timeTableId;
         this.timeTableName = timeTableName;
         this.startStation = startStation;
         this.endStation = endStation;
@@ -23,6 +26,21 @@ public class TrainTimeTable {
         this.trainId = trainId;
     }
 
+    public int getSELECTEDTIMETABLE() {
+        return SELECTEDTIMETABLE;
+    }
+
+    public void setSELECTEDTIMETABLE(int SELECTEDTIMETABLE) {
+        this.SELECTEDTIMETABLE = SELECTEDTIMETABLE;
+    }
+
+    public int getTimeTableId() {
+        return timeTableId;
+    }
+
+    public void setTimeTableId(int timeTableId) {
+        this.timeTableId = timeTableId;
+    }
 
     public String getTimeTableName() {
         return timeTableName;

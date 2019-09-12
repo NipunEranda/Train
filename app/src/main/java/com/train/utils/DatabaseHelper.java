@@ -1,22 +1,36 @@
 package com.train.utils;
 
+import android.animation.IntArrayEvaluator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.view.ContextThemeWrapper;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.train.R;
+import com.train.SearchTimeTable;
+import com.train.Train;
+import com.train.TrainTimeTable;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    Context appContext;
     public static final String DATABASE_NAME = "Train.db";
 
     /*TRAIN_TIMETABLE DETAILS*/
 
     public static final String TABLE_TIMETABLE = "TIMETABLE";
-    public static final String TIMETABLE_ID = "TABLE_ID";
+    public static final String TIMETABLE_ID = "TIMETABLE_ID";
     public static final String TIMETABLE_NAME = "TIMETABLE_NAME";
     public static final String START_STATION = "START_STATION";
     public static final String END_STATION = "END_STATION";
@@ -40,8 +54,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String STATION_NAME = "STATION_NAME";
     /**/
 
+    /*RecentSearches*/
+    public static final String TABLE_RECENT_TABLES = "RECENT_TABLES";
+    public static final String RECENT_TABLEID = "RECENT_TABLEID";
+    public static final String RECENT_RELEVENT_TABLEID = "RECENT_RELEVENT_TABLEID";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
+        appContext = context;
     }
 
     @Override
@@ -56,6 +76,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " TIMETABLE_NAME TEXT, START_STATION INTEGER, END_STATION INTEGER, ARRIVAL_TIME TEXT, DEPART_TIME TEXT," +
                 " TIMETABLE_DATE TEXT, TRAIN_ID INTEGER, FOREIGN KEY(TRAIN_ID) REFERENCES TRAIN(TRAIN_ID)," +
                 " FOREIGN KEY(START_STATION) REFERENCES STATION(STATION_ID), FOREIGN KEY(END_STATION) REFERENCES STATION(STATION_ID))");
+
+        db.execSQL("CREATE TABLE " + TABLE_RECENT_TABLES + "(RECENT_TABLEID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "RECENT_RELEVENT_TABLEID INTEGER, FOREIGN KEY(RECENT_RELEVENT_TABLEID) REFERENCES TIMETABLE(TABLE_ID))");
+
 
     }
 
@@ -82,6 +106,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         else
             return true;
+    }
+
+    public boolean insertRecentTable(int tableId){
+        boolean check = checkRecentTableExist(tableId);
+        if(check == true){
+            return false;
+        }else {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(RECENT_RELEVENT_TABLEID, tableId);
+            long result = db.insert(TABLE_RECENT_TABLES, null, contentValues);
+            if (result == -1)
+                return false;
+            else
+                return true;
+        }
+    }
+
+    public boolean checkRecentTableExist(int tableId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_RECENT_TABLES + " where " + RECENT_RELEVENT_TABLEID + " = " + tableId, null);
+        if(res.getCount() == 0){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    public int deleteRecentTable(String tableId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_RECENT_TABLES, "RECENT_RELEVENT_TABLEID = ?", new String[] {tableId});
+    }
+
+    public boolean deleteAllRecentTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int numberOfEntriesDeleted = db.delete(TABLE_RECENT_TABLES, null, null);
+        if(numberOfEntriesDeleted > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public boolean insertAStation(String stationName){
@@ -122,6 +188,361 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllTimeTables(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + TABLE_TIMETABLE, null);
+        return res;
+    }
+
+    public Cursor getATimeTable(int tableId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_TIMETABLE + " where " + TIMETABLE_ID + " = " + tableId, null);
+        return res;
+    }
+
+    public Cursor getAllRecentTables(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_RECENT_TABLES, null);
+        return res;
+    }
+
+    public Cursor getAllStations(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_STATION, null);
+        return res;
+    }
+
+    public Cursor getAllTrains(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_TRAIN, null);
+        return res;
+    }
+
+    public void setDefaultStations(){
+        Cursor cursor = getAllStations();
+        if(!cursor.moveToFirst()){
+            String defaultStations[] = appContext.getResources().getStringArray(R.array.defaultStations);
+            for(int i = 0; i < defaultStations.length; ++i){
+                insertAStation(defaultStations[i]);
+            }
+        }
+    }
+
+    public void setDefaultTrains(){
+        Cursor cursor = getAllTrains();
+        if(!cursor.moveToFirst()){
+            String defaultTrains[] = appContext.getResources().getStringArray(R.array.defaultTrains);
+            for(int i = 0; i < defaultTrains.length; ++i){
+                insertATrain(defaultTrains[i]);
+            }
+        }
+    }
+
+    public void setDefaultTimeTables(){
+        Cursor cursor = getAllTimeTables();
+        if(!cursor.moveToFirst()) {
+            String defaultTimeTables[] = appContext.getResources().getStringArray(R.array.defaultTimeTables);
+            for (int i = 0; i < defaultTimeTables.length; ++i) {
+                String details[] = defaultTimeTables[i].split(",");
+                insertATimeTable(details[0], Integer.parseInt(details[1]), Integer.parseInt(details[2]), details[3], details[4], details[5], Integer.parseInt(details[6]));
+            }
+        }
+    }
+
+    public List<String> getAllStationLabels(){
+        List<String> labels = new ArrayList<String>();
+        Cursor cursor = getAllStations();
+
+        if(cursor.moveToFirst()){
+            do{
+                if(cursor.getInt(0) == 1){
+                    labels.add("Select a station");
+                }
+                    labels.add(cursor.getString(1));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return labels;
+    }
+
+
+    public List<String> getAllTrainLabels(){
+        List<String> labels = new ArrayList<String>();
+        Cursor cursor = getAllTrains();
+
+        if(cursor.moveToFirst()){
+            do{
+                if(cursor.getInt(0) == 1){
+                    labels.add("Select a train");
+                }
+                labels.add(cursor.getString(1));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return labels;
+    }
+
+    public void loadStations(Spinner spinner, String dStations[]){
+        List<String> labels = getAllStationLabels();
+
+        if(labels.isEmpty()){
+            labels = getAllStationLabels();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(appContext, android.R.layout.simple_spinner_item, labels);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+
+    public void loadTrains(Spinner spinner, String dTrains[]){
+        List<String> labels = getAllTrainLabels();
+
+        if(labels.isEmpty()){
+            labels = getAllTrainLabels();
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(appContext, android.R.layout.simple_spinner_item, labels);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+    }
+    //Setup sql queries for searchtimetableview.java
+    public Cursor timeTableSearch(int startStationID, int endStationID, boolean isNextTrainOn, boolean isDailyScheduleOn, String date, boolean isTimeFilterOn, String startTime, String endTime){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = null;
+
+        if(startTime == "Set Start Time")
+            startTime = "";
+        if(endTime == "Set End Time")
+            endTime = "";
+
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals("") && isTimeFilterOn == false) {
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + END_STATION + " = " + endStationID, null);
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && !(date.equals("")) && isTimeFilterOn == false){
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + END_STATION + " = " + endStationID + " AND " + TIMETABLE_DATE + " <= '" + date + "'", null);
+            Toast.makeText(appContext, "Normal with date", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == false){
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + END_STATION + " = " + endStationID + " AND " + ARRIVAL_TIME + " > " + Utils.getCurrentTime(appContext), null);
+            Toast.makeText(appContext, "Finding Next Train, date is known", Toast.LENGTH_SHORT).show();
+        }
+        /*if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Next Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Next Train, date is known, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Next Train, date is unKnown, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Next Train, date is unKnown, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Next Train,  date is unKnown", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Daily Train, date is known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Daily Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Daily Train, date is known, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Daily Train, date is unKnown, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Daily Train, date is unKnown, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Daily Train,  date is unKnown", Toast.LENGTH_SHORT).show();
+        }
+
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")) {
+            Toast.makeText(appContext, "Normal, start time and endtime known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true&& !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Normal with date", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is known, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is unKnown, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is unKnown, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train,  date is unKnown", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is known, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is unKnown, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is unKnown, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train,  date is unKnown", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, but doesn't know startStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, but doesn't know startStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, date is known, but doesn't know endStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, but doesn't know endStation", Toast.LENGTH_SHORT).show();
+        }
+
+
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")) {
+            Toast.makeText(appContext, "Normal", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true&& startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Normal with date", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is known, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is unKnown, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is unKnown, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train,  date is unKnown", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is known, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is unKnown, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is unKnown, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == true && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train,  date is unKnown", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, but doesn't know startStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, but doesn't know startStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, date is known, but doesn't know endStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && startTime.equals("Set Start Time") && !endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, but doesn't know endStation", Toast.LENGTH_SHORT).show();
+        }
+
+
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")) {
+            Toast.makeText(appContext, "Normal", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true&& !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Normal with date", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is known, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is unKnown, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train, date is unKnown, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Next Train,  date is unKnown", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is known, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is unKnown, endstation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train, date is unKnown, startStation known", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && date.equals(null) && isTimeFilterOn == true && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Daily Train,  date is unKnown", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, but doesn't know startStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, but doesn't know startStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, date is known, but doesn't know endStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && !startTime.equals("Set Start Time") && endTime.equals("Set End Time")){
+            Toast.makeText(appContext, "Finding Known, but doesn't know endStation", Toast.LENGTH_SHORT).show();
+        }
+
+
+
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Known, but doesn't know startStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Known, but doesn't know startStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Known, date is known, but doesn't know endStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == false){
+            Toast.makeText(appContext, "Finding Known, but doesn't know endStation", Toast.LENGTH_SHORT).show();
+        }
+        if(startStationID == 0 && endStationID == 0){
+            Toast.makeText(appContext, "Specify atleast Start station", Toast.LENGTH_SHORT).show();
+        }*/
+
         return res;
     }
 }

@@ -45,8 +45,7 @@
     <string name="enterName">Enter alarm Name</string>
     <string name="nameofStation">Name of the Station</string>
 
-    <string-array name="startStations">
-        <item>Select Start Station :</item>
+    <string-array name="defaultStations">
         <item>AHUNGALLA</item>
         <item>AKBOPURA</item>
         <item>AKURALA</item>
@@ -57,35 +56,24 @@
         <item>AMBALANGODA</item>
     </string-array>
 
-    <string-array name="endStations">
-        <item>Select End Station : </item>
-        <item>AHUNGALLA</item>
-        <item>AKBOPURA</item>
-        <item>AKURALA</item>
-        <item>ALAWATUPITIYA</item>
-        <item>ALAWWA</item>
-        <item>ALUTH AMBALAMA</item>
-        <item>ALUTHGAMA</item>
-        <item>AMBALANGODA</item>
-    </string-array>
-
-    <string-array name="trainTypes">
-        <item>Select Train Type : </item>
+    <string-array name="defaultTrains">
         <item>EXPRESS TRAIN</item>
         <item>LONG DISTANCE</item>
         <item>COLOMBO COMMUTER</item>
+    </string-array>
+
+    <string-array name="defaultTimeTables">
+        <item>AHUNGALLA to AKBOPURA,1,2,06:00,07:30,1-1-2019,1</item>
+        <item>AKBOPURA to AHUNGALLA,2,1,07:40,09:00,5-1-2019,1</item>
+        <item>AHUNGALLA to AKURALA,1,3,02:40,04:00,11-1-2019,2</item>
+        <item>AKURALA to AHUNGALLA,3,1,04:10,06:00,21-1-2019,2</item>
     </string-array>
 
     <string-array name="recentSearch">
         <item>Amabalngoda - Kollupitiya</item>
         <item>Kollupitiya - Ambalangoda</item>
         <item>Galle - Kollupitiya</item>
-    </string-array>
-
-    <string-array name="userDefineTimeTables">
-        <item>Amabalngoda - Kollupitiya</item>
-        <item>Kollupitiya - Ambalangoda</item>
-        <item>Galle - Kollupitiya</item>
+        <item>LOL</item>
     </string-array>
 
     <string-array name="viewTrain">

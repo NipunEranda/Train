@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
             android:background="@color/buttonColor"
             android:text="@string/deleteBtn"
@@ -28,7 +28,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/saveBtn" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="40dp"
+            android:background="@color/buttonColor"
+            android:text="@string/editBtn"
+            android:textColor="#FFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trainId" />
 
         <TextView
             android:id="@+id/arrivalTimeTxt"
@@ -38,7 +52,16 @@
             android:layout_marginEnd="40dp"
             android:text="@string/arrivalLabel"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/swap" />
+            app:layout_constraintTop_toBottomOf="@+id/swapBtn" />
+
+        <TextView
+            android:id="@+id/departTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:text="@string/departLabel"
+            app:layout_constraintBaseline_toBaselineOf="@+id/departTimeBtn"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/arrivalTimeBtn"
@@ -52,7 +75,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/swap"
+            android:id="@+id/swapBtn"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_marginStart="282dp"
@@ -82,7 +105,7 @@
             app:layout_constraintTop_toBottomOf="@+id/startStation" />
 
         <Spinner
-            android:id="@+id/trainType"
+            android:id="@+id/trainId"
             style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_width="match_parent"
             android:layout_height="41dp"
@@ -116,37 +139,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="44dp"
-            android:layout_marginEnd="81dp"
             android:text="@string/nameLabel"
-            app:layout_constraintEnd_toStartOf="@+id/routeName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/routeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="243dp"
+            android:layout_height="41dp"
             android:layout_marginEnd="40dp"
             android:ems="10"
             android:hint="@string/hint_enterRouteName"
             android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textSize="16sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.669"
-            app:layout_constraintStart_toEndOf="@+id/textView4" />
-
-        <TextView
-            android:id="@+id/departTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="127dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="40dp"
-            android:text="@string/departLabel"
-            android:textAlignment="viewEnd"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/departTimeBtn"
-            app:layout_constraintTop_toBottomOf="@+id/arrivalTimeTxt" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/dateTxt"
@@ -184,21 +192,6 @@
             android:textColor="#FFF"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/departTimeBtn" />
-
-        <Button
-            android:id="@+id/editBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="40dp"
-            android:background="@color/buttonColor"
-            android:text="@string/editBtn"
-            android:textColor="#FFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/trainType" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

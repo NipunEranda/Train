@@ -5,8 +5,8 @@
 
 
     <TextView
-        android:id="@+id/timeTableName"
-        android:layout_width="753dp"
+        android:id="@+id/recentTimeTableName"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_weight="66.66"
         android:gravity="center"
@@ -14,25 +14,34 @@
         android:textAlignment="center" />
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="162dp"
         android:layout_height="wrap_content"
-        android:layout_weight="33.33">
+        android:layout_weight="18.33"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/timeTableStartStation"
+            android:id="@+id/recentTimeTableStartStation"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center"
             android:text="start Station" />
 
         <TextView
-            android:id="@+id/timeTableEndStation"
+            android:id="@+id/recentTimeTableEndStation"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center"
             android:text="End Station" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/recentTableDeleteBtn"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:background="@color/white"
+        android:text="@string/deleteBtn"
+        android:textSize="15dp" />
 
 </LinearLayout>
