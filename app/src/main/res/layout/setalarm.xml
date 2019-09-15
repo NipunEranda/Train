@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    >
 
     <ScrollView
         android:layout_width="0dp"
@@ -54,7 +54,7 @@
                     app:fontFamily="sans-serif-condensed-medium" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/trainTime"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -66,7 +66,7 @@
                     app:fontFamily="sans-serif-condensed-medium" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/trainStation"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -97,7 +97,7 @@
                     app:fontFamily="sans-serif-condensed-medium" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/alarmName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -106,18 +106,17 @@
                     android:hint="@string/enterName"
                     android:inputType="textPersonName" />
 
-                <Button
-                    android:id="@+id/setClock"
+                <TimePicker
+                    android:id="@+id/timePicker"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#004D40"
-                    android:text="Set Time"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp" />
+                    android:layout_height="350dp"
+                    android:headerBackground="#004D40"
+                    android:timePickerMode="clock"
+                    android:numbersSelectorColor="#004D40"/>
+
 
                 <TextView
-                    android:id="@+id/setAlarmTime"
+                    android:id="@+id/alarmTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Set Time"
@@ -143,7 +142,7 @@
                         android:textColor="@color/white" />
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/cancelAlarm"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"

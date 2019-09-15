@@ -1,6 +1,8 @@
 package com.train;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,46 +19,53 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.train.utils.DatabaseHelper;
+import com.train.utils.Utils;
 import com.train.utils.getDateTime;
 
 public class EditTimeTable extends Fragment implements View.OnClickListener {
 
-    TrainTimeTable trainTimeTable;
-    String stationsArray[], trainsArray[];
-    Spinner startStationSpinner, endStationSpinner, trainIdSpinner;
-    Button arrivalBtn, departBtn,dateBtn, saveBtn, swapBtn;
-    TextView arrivalTimeTxt, departTimeTxt, dateTxt;
-    View view;
-    EditText tableName;
-    DatabaseHelper trainDB;
+    private TrainTimeTable trainTimeTable;
+    private String stationsArray[], trainsArray[];
+    private Spinner startStationSpinner, endStationSpinner, trainIdSpinner;
+    private Button arrivalBtn, departBtn,dateBtn, saveBtn, swapBtn, deleteBtn, setAlarmBtn;
+    private TextView arrivalTimeTxt, departTimeTxt, dateTxt;
+    private View view;
+    private EditText tableName;
+    private DatabaseHelper trainDB;
 
-    String routeName;
-    int startStation;
-    int endStation;
-    String arrivalTime;
-    String departTime;
-    String date;
-    int trainId;
+    private String routeName;
+    private int startStation;
+    private int endStation;
+    private String arrivalTime;
+    private String departTime;
+    private String date;
+    private int trainId;
+    private boolean editOn = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.edit_time_table, container, false);
 
         tableName = view.findViewById(R.id.routeName);
-        arrivalBtn = (Button) view.findViewById(R.id.arrivalTimeBtn);
-        departBtn = (Button) view.findViewById(R.id.departTimeBtn);
-        dateBtn = (Button) view.findViewById(R.id.dateBtn);
-        saveBtn = (Button) view.findViewById(R.id.saveBtn);
-        swapBtn = (Button)view.findViewById(R.id.swapBtn);
-        arrivalTimeTxt = (TextView)view.findViewById(R.id.arrivalTimeTxt);
-        departTimeTxt = (TextView)view.findViewById(R.id.departTxt);
-        dateTxt = (TextView)view.findViewById(R.id.dateTxt);
+        arrivalBtn = view.findViewById(R.id.arrivalTimeBtn);
+        departBtn = view.findViewById(R.id.departTimeBtn);
+        dateBtn = view.findViewById(R.id.dateBtn);
+        saveBtn = view.findViewById(R.id.saveBtn);
+        swapBtn = view.findViewById(R.id.swapBtn);
+        deleteBtn = view.findViewById(R.id.deleteBtn);
+        setAlarmBtn = view.findViewById(R.id.setAlarmBtn);
+        arrivalTimeTxt = view.findViewById(R.id.arrivalTimeTxt);
+        departTimeTxt = view.findViewById(R.id.departTxt);
+        dateTxt = view.findViewById(R.id.dateTxt);
         arrivalBtn.setOnClickListener(this);
         departBtn.setOnClickListener(this);
         dateBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
         swapBtn.setOnClickListener(this);
+        deleteBtn.setOnClickListener(this);
+        setAlarmBtn.setOnClickListener(this);
         trainDB = new DatabaseHelper(getContext());
 
+        Utils.disableBtn(deleteBtn);
 
         return view;
     }
@@ -113,8 +122,34 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
                 endStationSpinner.setSelection(temp);
                 break;
             case R.id.saveBtn:
-                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).addToBackStack(null).commit();
+                if(saveBtn.getText().toString().equalsIgnoreCase("save")){
+                    Utils.disableBtn(deleteBtn);
+                    saveBtn.setText("Edit");
+                    setAlarmBtn.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                    setAlarmBtn.setText("Set Alarm");
+                    Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                }else{
+                    Utils.enableBtn(deleteBtn);
+                    saveBtn.setText("Save");
+                    setAlarmBtn.setText("Cancel");
+                    setAlarmBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                }
+                break;
+
+            case R.id.deleteBtn:
+                break;
+
+            case R.id.setAlarmBtn:
+                if(setAlarmBtn.getText().toString().equalsIgnoreCase("cancel")){
+                    Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
+                    setAlarmBtn.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                    Utils.disableBtn(deleteBtn);
+                    saveBtn.setText("Edit");
+                    setAlarmBtn.setText("Set Alarm");
+                }else {
+                    Intent i = new Intent(getContext(), AddAlarm.class);
+                    startActivity(i);
+                }
                 break;
         }
     }

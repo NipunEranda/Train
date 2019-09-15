@@ -7,9 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -149,7 +147,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="100dp"
             android:background="@color/buttonColor"
@@ -227,17 +225,22 @@
 
             <TextView
                 android:id="@+id/endTimeTxt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="37dp"
+                android:layout_marginEnd="80dp"
+                android:layout_marginRight="80dp"
                 android:text="@string/endTimeLabel"
                 android:textAlignment="textEnd"
-                app:layout_constraintBaseline_toBaselineOf="@+id/endTime"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/startTimeTxt" />
 
             <TextView
                 android:id="@+id/startTimeTxt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="80dp"
+                android:layout_marginRight="80dp"
                 android:text="@string/startTimeLabel"
                 android:textAlignment="viewEnd"
                 app:layout_constraintBaseline_toBaselineOf="@+id/startTime"

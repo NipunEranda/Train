@@ -12,35 +12,49 @@
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:minHeight="720dp"
+        android:minHeight="650dp"
         tools:context=".CreateTimeTable">
 
         <Button
             android:id="@+id/deleteBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="46dp"
             android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp"
             android:background="@color/buttonColor"
             android:text="@string/deleteBtn"
             android:textColor="#FFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/saveBtn" />
 
         <Button
-            android:id="@+id/saveBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="30dp"
+            android:id="@+id/setAlarmBtn"
+            android:layout_width="0dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="28dp"
             android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@color/buttonColor"
+            android:text="@string/setAlarmBtn"
+            android:textColor="#FFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/deleteBtn"
+            app:layout_constraintTop_toBottomOf="@+id/trainId" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="120dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="28dp"
             android:background="@color/buttonColor"
             android:text="@string/editBtn"
             android:textColor="#FFF"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/trainId" />
 
@@ -138,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="30dp"
             android:text="@string/nameLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -148,6 +162,7 @@
             android:layout_width="243dp"
             android:layout_height="41dp"
             android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
             android:ems="10"
             android:hint="@string/hint_enterRouteName"
             android:inputType="textPersonName"

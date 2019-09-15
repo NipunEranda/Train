@@ -36,19 +36,17 @@ public class UserTimeTables extends Fragment implements AdapterView.OnItemClickL
 
         trainDB = new DatabaseHelper(getContext());
 
-        Cursor res = trainDB.getAllTimeTables();
-
-        if(!res.moveToFirst()){
-            res = trainDB.getAllTimeTables();
+        if(trainTimeTable.size() == 0) {
+            Cursor res = trainDB.getAllTimeTables();
+            if (!res.moveToFirst()) {
+                res = trainDB.getAllTimeTables();
+            }
+            do {
+                TrainTimeTable timetable = new TrainTimeTable(res.getInt(0), res.getString(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7));
+                trainTimeTable.add(timetable);
+            } while (res.moveToNext());
         }
-        do{
-            TrainTimeTable timetable = new TrainTimeTable(res.getInt(0), res.getString(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7));
-            trainTimeTable.add(timetable);
-        }while (res.moveToNext());
-
-        if(trainTimeTableListView.getCount() == 0) {
-            fillListView();
-        }
+        fillListView();
 
         return view;
     }

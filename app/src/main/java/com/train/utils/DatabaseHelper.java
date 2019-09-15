@@ -59,6 +59,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String RECENT_TABLEID = "RECENT_TABLEID";
     public static final String RECENT_RELEVENT_TABLEID = "RECENT_RELEVENT_TABLEID";
 
+
+    /*AlarmTable*/
+    public static final String TABLE_ALARM = "alarm_table1";
+    public static final String COL_1 = "id";
+    public static final String COL_2 = "ALARM_NAME";
+    public static final String COL_3 = "ALARM_TIME";
+    public static final String COL_4 = "TRAIN_TIME";
+    public static final String COL_5 = "STATION";
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
         appContext = context;
@@ -80,6 +89,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_RECENT_TABLES + "(RECENT_TABLEID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "RECENT_RELEVENT_TABLEID INTEGER, FOREIGN KEY(RECENT_RELEVENT_TABLEID) REFERENCES TIMETABLE(TABLE_ID))");
 
+        String Alarm_table_Q =
+                "CREATE TABLE " + TABLE_ALARM + "("
+                        + COL_1 + " INTEGER PRIMARY KEY ,"+
+                        COL_2 + " TEXT ,"+
+                        COL_3 + " TEXT ,"+
+                        COL_4 + " TEXT ,"+
+                        COL_5 + " TEXT " + ");";
+
+        db.execSQL(Alarm_table_Q);
 
     }
 
@@ -88,7 +106,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIMETABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRAIN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STATION);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALARM);
         onCreate(db);
+    }
+
+    public boolean insertAnAlarm(String aName,String aTime,String tTime,String tStation){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL_2,aName);
+        contentValues.put(COL_3,aTime);
+        contentValues.put(COL_4,tTime);
+        contentValues.put(COL_5,tStation);
+
+
+        long result = db.insert(TABLE_ALARM,null,contentValues);
+
+        if(result == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+
     }
 
     public boolean insertATimeTable(String timeTableName, int startStation, int endStation, String arrivalTime, String departTime, String date, int trainId){

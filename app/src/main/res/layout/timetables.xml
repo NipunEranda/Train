@@ -19,7 +19,7 @@
             android:layout_width="147dp"
             android:layout_height="140dp"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="20dp"
             android:background="@color/white"
             android:drawableTop="@drawable/search"
             android:fontFamily="@font/syncopate"
@@ -31,6 +31,8 @@
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textDirection="firstStrongLtr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -49,13 +51,17 @@
             android:text="@string/createBtn"
             android:textColor="@color/black"
             app:layout_constraintBaseline_toBaselineOf="@+id/searchTimeTable"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/userTimeTable"
             android:layout_width="147dp"
             android:layout_height="140dp"
             android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
             android:background="@color/white"
             android:drawableTop="@drawable/usertimetable"
             android:fontFamily="@font/syncopate"
@@ -64,12 +70,16 @@
             android:text="@string/userTables"
             android:textColor="@color/black"
             app:layout_constraintBaseline_toBaselineOf="@+id/recentSearches"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/recentSearches"
             android:layout_width="147dp"
             android:layout_height="140dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="100dp"
@@ -83,7 +93,10 @@
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createTimeTable" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createTimeTable"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/imageView6"
