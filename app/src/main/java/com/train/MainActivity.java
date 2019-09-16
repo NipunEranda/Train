@@ -1,6 +1,7 @@
 package com.train;
 
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
@@ -91,6 +92,8 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_alarms:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Alarm()).commit();
+               // Intent intent = new Intent(MainActivity.this,Alarm.class);
+               // startActivity(intent);
                 break;
 
             case R.id.nav_share:

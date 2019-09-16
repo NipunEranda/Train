@@ -2,10 +2,13 @@ package com.train;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 
 public class AlarmDBHelper extends SQLiteOpenHelper {
 
@@ -59,5 +62,61 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
             return true;
         }
 
+    }
+
+    public ArrayList<Alarms> getAllData(){
+        ArrayList<Alarms> arrayList= new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM alarm_table1",null);
+
+        while (cursor.moveToNext()){
+            String ID = cursor.getString(0);
+            String aName = cursor.getString(1);
+            String aTime= cursor.getString(2);
+            String tTime = cursor.getString(3);
+            String tStation  = cursor.getString(4);
+
+            Alarms alarms = new Alarms(ID,aName,aTime,tTime,tStation);
+
+            arrayList.add(alarms);
+        }
+
+        return arrayList;
+    }
+
+
+    public Cursor getItemId(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "Select " + COL_1 + "from" + TABLE_NAME +
+                " where " + COL_2 + " = '" + name + "'";
+        Cursor data = db.rawQuery(query,null);
+        return data;
+    }
+
+    public boolean updateData(String newName,String alarmTime,String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL_1,id);
+        contentValues.put(COL_2,newName);
+        contentValues.put(COL_3,alarmTime);
+
+        db.update(TABLE_NAME,contentValues,"id = ?",new String[] { id });
+        /**  String query = "Update " + TABLE_NAME + " set " + COL_2 +
+                " = '" + newName + "' AND " + COL_3 +
+                " = '" + alarmTime + "' WHERE " + COL_1 + " = '" + id + "'";
+        db.execSQL(query);**/
+        return true;
+    }
+
+    public void deleteData(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "DELETE From " + TABLE_NAME + " WHERE "
+                + COL_1 + " = '" + id + "'";
+        db.execSQL(query);
     }
 }
