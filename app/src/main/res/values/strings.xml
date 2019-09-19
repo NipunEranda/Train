@@ -63,17 +63,10 @@
     </string-array>
 
     <string-array name="defaultTimeTables">
-        <item>AHUNGALLA to AKBOPURA,1,2,06:00,07:30,1-1-2019,1</item>
-        <item>AKBOPURA to AHUNGALLA,2,1,07:40,09:00,5-1-2019,1</item>
-        <item>AHUNGALLA to AKURALA,1,3,02:40,04:00,11-1-2019,2</item>
-        <item>AKURALA to AHUNGALLA,3,1,04:10,06:00,21-1-2019,2</item>
-    </string-array>
-
-    <string-array name="recentSearch">
-        <item>Amabalngoda - Kollupitiya</item>
-        <item>Kollupitiya - Ambalangoda</item>
-        <item>Galle - Kollupitiya</item>
-        <item>LOL</item>
+        <item>AHUNGALLA to AKBOPURA,1,2,06:00,07:30,1-1-2019,1,1</item>
+        <item>AKBOPURA to AHUNGALLA,2,1,07:40,09:00,5-1-2019,1,1</item>
+        <item>AHUNGALLA to AKURALA,1,3,02:40,04:00,11-1-2019,2,1</item>
+        <item>AKURALA to AHUNGALLA,3,1,04:10,06:00,21-1-2019,2,1</item>
     </string-array>
 
     <string-array name="viewTrain">
@@ -87,5 +80,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="setAlarmBtn">Set Alarm</string>
+    <string name="setBtn">SET</string>
 
 </resources>

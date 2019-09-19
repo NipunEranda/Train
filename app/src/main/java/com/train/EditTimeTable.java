@@ -33,13 +33,8 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
     private EditText tableName;
     private DatabaseHelper trainDB;
 
-    private String routeName;
-    private int startStation;
-    private int endStation;
-    private String arrivalTime;
-    private String departTime;
-    private String date;
-    private int trainId;
+    private int timeTableId;
+    private int isDefault;
     private boolean editOn = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +61,7 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
         trainDB = new DatabaseHelper(getContext());
 
         Utils.disableBtn(deleteBtn);
+        setFieldDisable();
 
         return view;
     }
@@ -93,6 +89,8 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
         trainDB.loadStations(endStationSpinner, stationsArray);
         trainDB.loadTrains(trainIdSpinner, trainsArray);
 
+        timeTableId = trainTimeTable.getTimeTableId();
+        isDefault = trainTimeTable.getIsDefault();
         tableName.setText(trainTimeTable.getTimeTableName());
         startStationSpinner.setSelection(trainTimeTable.getStartStation());
         endStationSpinner.setSelection(trainTimeTable.getEndStation());
@@ -122,14 +120,26 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
                 endStationSpinner.setSelection(temp);
                 break;
             case R.id.saveBtn:
+
                 if(saveBtn.getText().toString().equalsIgnoreCase("save")){
                     Utils.disableBtn(deleteBtn);
+                    ((MainActivity) getActivity())
+                            .setActionBarTitle("View Timetables");
                     saveBtn.setText("Edit");
                     setAlarmBtn.setBackgroundColor(getResources().getColor(R.color.buttonColor));
                     setAlarmBtn.setText("Set Alarm");
-                    Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                    //set Query
+                    boolean isUpdate = trainDB.editTimeTable(String.valueOf(trainTimeTable.getTimeTableId()), tableName.getText().toString(), startStationSpinner.getSelectedItemPosition(), endStationSpinner.getSelectedItemPosition(), arrivalTimeTxt.getText().toString(), departTimeTxt.getText().toString(), dateTxt.getText().toString(), trainIdSpinner.getSelectedItemPosition(), trainTimeTable.getIsDefault());
+                    if(isUpdate) {
+                        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).commit();
+                    }else{
+                        Toast.makeText(getContext(), "Unsuccessful", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
                     Utils.enableBtn(deleteBtn);
+                    ((MainActivity) getActivity())
+                            .setActionBarTitle("Edit Timetables");
                     saveBtn.setText("Save");
                     setAlarmBtn.setText("Cancel");
                     setAlarmBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -137,6 +147,9 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.deleteBtn:
+                trainDB.deleteTimeTable(String.valueOf(trainTimeTable.getTimeTableId()));
+                Toast.makeText(getContext(), "Delete Success!", Toast.LENGTH_SHORT).show();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new UserTimeTables()).commit();
                 break;
 
             case R.id.setAlarmBtn:
@@ -144,6 +157,8 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
                     Toast.makeText(getContext(), "Canceled", Toast.LENGTH_SHORT).show();
                     setAlarmBtn.setBackgroundColor(getResources().getColor(R.color.buttonColor));
                     Utils.disableBtn(deleteBtn);
+                    ((MainActivity) getActivity())
+                            .setActionBarTitle("View Timetables");
                     saveBtn.setText("Edit");
                     setAlarmBtn.setText("Set Alarm");
                 }else {
@@ -152,5 +167,9 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
                 }
                 break;
         }
+    }
+
+    public void setFieldDisable(){
+        tableName.setEnabled(false);
     }
 }

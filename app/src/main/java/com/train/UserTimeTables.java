@@ -42,7 +42,7 @@ public class UserTimeTables extends Fragment implements AdapterView.OnItemClickL
                 res = trainDB.getAllTimeTables();
             }
             do {
-                TrainTimeTable timetable = new TrainTimeTable(res.getInt(0), res.getString(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7));
+                TrainTimeTable timetable = new TrainTimeTable(res.getInt(0), res.getString(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8));
                 trainTimeTable.add(timetable);
             } while (res.moveToNext());
         }
@@ -62,7 +62,7 @@ public class UserTimeTables extends Fragment implements AdapterView.OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         trainDB.insertRecentTable(trainTimeTable.get(i).getTimeTableId());
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditTimeTable(trainTimeTable.get(i))).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditTimeTable(trainTimeTable.get(i))).commit();
     }
 
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     DatabaseHelper trainDB;
+    MenuItem action_settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity
         trainDB.setDefaultStations();
         trainDB.setDefaultTimeTables();
 
+
+
     }
 
 
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AppSettings()).commit();
             return true;
         }
 

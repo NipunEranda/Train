@@ -3,6 +3,7 @@ package com.train.utils;
 import android.animation.IntArrayEvaluator;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -17,6 +18,7 @@ import com.train.SearchTimeTable;
 import com.train.Train;
 import com.train.TrainTimeTable;
 
+import java.sql.SQLTransactionRollbackException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DEPART_TIME = "DEPART_TIME";
     public static final String TIMETABLE_DATE = "TIMETABLE_DATE";
     public static final String TIMETABLE_TRAIN_ID = "TRAIN_ID";
+    public static final String TIMETABLE_IS_DEFAULT = "IS_DEFAULT";
 
     String startStation;
     /**/
@@ -83,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + TABLE_TIMETABLE + "(TIMETABLE_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " TIMETABLE_NAME TEXT, START_STATION INTEGER, END_STATION INTEGER, ARRIVAL_TIME TEXT, DEPART_TIME TEXT," +
-                " TIMETABLE_DATE TEXT, TRAIN_ID INTEGER, FOREIGN KEY(TRAIN_ID) REFERENCES TRAIN(TRAIN_ID)," +
+                " TIMETABLE_DATE TEXT, TRAIN_ID INTEGER, IS_DEFAULT INTEGER, FOREIGN KEY(TRAIN_ID) REFERENCES TRAIN(TRAIN_ID)," +
                 " FOREIGN KEY(START_STATION) REFERENCES STATION(STATION_ID), FOREIGN KEY(END_STATION) REFERENCES STATION(STATION_ID))");
 
         db.execSQL("CREATE TABLE " + TABLE_RECENT_TABLES + "(RECENT_TABLEID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -131,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertATimeTable(String timeTableName, int startStation, int endStation, String arrivalTime, String departTime, String date, int trainId){
+    public boolean insertATimeTable(String timeTableName, int startStation, int endStation, String arrivalTime, String departTime, String date, int trainId, int isDefault){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TIMETABLE_NAME, timeTableName);
@@ -141,11 +144,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(DEPART_TIME, departTime);
         contentValues.put(TIMETABLE_DATE, date);
         contentValues.put(TIMETABLE_TRAIN_ID, trainId);
+        contentValues.put(TIMETABLE_IS_DEFAULT, isDefault);
         long result = db.insert(TABLE_TIMETABLE, null, contentValues);
         if(result == -1)
             return false;
         else
             return true;
+    }
+
+    public boolean editTimeTable(String id, String name, int startStation, int endStation, String arrivaTime, String departTime, String date, int trainId, int isDefault){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TIMETABLE_NAME, name);
+        contentValues.put(START_STATION, startStation);
+        contentValues.put(END_STATION, endStation);
+        contentValues.put(ARRIVAL_TIME, arrivaTime);
+        contentValues.put(DEPART_TIME, departTime);
+        contentValues.put(TIMETABLE_DATE, date);
+        contentValues.put(TIMETABLE_TRAIN_ID, trainId);
+        contentValues.put(TIMETABLE_IS_DEFAULT, isDefault);
+        int res = db.update(TABLE_TIMETABLE, contentValues, "TIMETABLE_ID = ?", new String[] {id});
+        if(res < 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public int deleteTimeTable(String tableId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_TIMETABLE, "TIMETABLE_ID = ?", new String[] {tableId});
     }
 
     public boolean insertRecentTable(int tableId){
@@ -279,11 +308,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void setDefaultTimeTables(){
         Cursor cursor = getAllTimeTables();
         if(!cursor.moveToFirst()) {
-            String defaultTimeTables[] = appContext.getResources().getStringArray(R.array.defaultTimeTables);
-            for (int i = 0; i < defaultTimeTables.length; ++i) {
-                String details[] = defaultTimeTables[i].split(",");
-                insertATimeTable(details[0], Integer.parseInt(details[1]), Integer.parseInt(details[2]), details[3], details[4], details[5], Integer.parseInt(details[6]));
+            insertDefaultTimeTables();
+        }else{
+            if(deleteAllDefaultTimeTables()){
+                insertDefaultTimeTables();
             }
+        }
+    }
+
+    public void insertDefaultTimeTables(){
+        String defaultTimeTables[] = appContext.getResources().getStringArray(R.array.defaultTimeTables);
+        for (int i = 0; i < defaultTimeTables.length; ++i) {
+            String details[] = defaultTimeTables[i].split(",");
+            insertATimeTable(details[0], Integer.parseInt(details[1]), Integer.parseInt(details[2]), details[3], details[4], details[5], Integer.parseInt(details[6]), Integer.parseInt(details[7]));
+        }
+    }
+
+    public boolean deleteAllDefaultTimeTables(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int numberOfEntriesDeleted = db.delete(TABLE_TIMETABLE, "IS_DEFAULT = ?", new String[] {String.valueOf(1)});
+        if(numberOfEntriesDeleted > 0){
+            return true;
+        }else{
+            return false;
         }
     }
 

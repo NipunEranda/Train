@@ -82,7 +82,7 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
                 break;
             case R.id.saveBtn:
                 String dateText = String.valueOf(date[0]) + "-" + String.valueOf(date[1]) + "-" + String.valueOf(date[2]);
-                boolean isInserted = trainDB.insertATimeTable(routeName.getText().toString(), startStationSpinner.getSelectedItemPosition(), endStationSpinner.getSelectedItemPosition(), arrivalTimeTxt.getText().toString(), departTimeTxt.getText().toString(), dateText, trainIdSpinner.getSelectedItemPosition());
+                boolean isInserted = trainDB.insertATimeTable(routeName.getText().toString(), startStationSpinner.getSelectedItemPosition(), endStationSpinner.getSelectedItemPosition(), arrivalTimeTxt.getText().toString(), departTimeTxt.getText().toString(), dateText, trainIdSpinner.getSelectedItemPosition(), 0);
                 if(isInserted){
                     Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                     getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).addToBackStack(null).commit();

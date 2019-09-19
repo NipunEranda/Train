@@ -10,6 +10,7 @@ public class TrainTimeTable {
     String departTime;
     String trainDate;
     int trainId;
+    int isDefault;
     static int SELECTEDTIMETABLE;
 
     public TrainTimeTable() {
@@ -24,6 +25,26 @@ public class TrainTimeTable {
         this.departTime = departTime;
         this.trainDate = trainDate;
         this.trainId = trainId;
+    }
+
+    public TrainTimeTable(int timeTableId, String timeTableName, int startStation, int endStation, String arrivalTime, String departTime, String trainDate, int trainId, int isDefault) {
+        this.timeTableId = timeTableId;
+        this.timeTableName = timeTableName;
+        this.startStation = startStation;
+        this.endStation = endStation;
+        this.arrivalTime = arrivalTime;
+        this.departTime = departTime;
+        this.trainDate = trainDate;
+        this.trainId = trainId;
+        this.isDefault = isDefault;
+    }
+
+    public int getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(int isDefault) {
+        this.isDefault = isDefault;
     }
 
     public int getSELECTEDTIMETABLE() {

@@ -199,7 +199,7 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
                                 Utils.showMessage("Error", "No Results", getContext());
                                 break;
                             } else {
-                                TrainTimeTable trainTimeTable = new TrainTimeTable(res.getInt(0), res.getString(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7));
+                                TrainTimeTable trainTimeTable = new TrainTimeTable(res.getInt(0), res.getString(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8));
                                 timeTableArrayList.add(trainTimeTable);
                             }
                         } while (res.moveToNext());
