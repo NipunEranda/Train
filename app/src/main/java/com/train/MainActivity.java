@@ -1,6 +1,7 @@
 package com.train;
 
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
@@ -51,7 +52,10 @@ public class MainActivity extends AppCompatActivity
         trainDB = new DatabaseHelper(getApplicationContext());
         trainDB.setDefaultTrains();
         trainDB.setDefaultStations();
-        trainDB.setDefaultTimeTables();
+        Cursor cursor = trainDB.getAllTimeTables();
+        if(!cursor.moveToFirst()){
+            trainDB.setDefaultTimeTables();
+        }
 
 
 

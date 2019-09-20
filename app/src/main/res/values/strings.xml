@@ -16,7 +16,7 @@
     <string name="createBtn">Create</string>
     <string name="searchBtn">Search</string>
     <string name="userTables">User TimeTables</string>
-    <string name="recentSearches">Reacent Search</string>
+    <string name="recentTables">Recent\nTables</string>
     <string name="nextTrainLabel">Next Train</string>
     <string name="dailySchedule">Daily Schedule</string>
     <string name="selectDateBtn">Select Date</string>

@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/recentTimeTableName"
-        android:layout_width="wrap_content"
+        android:layout_width="276dp"
         android:layout_height="60dp"
         android:layout_weight="66.66"
         android:gravity="center"
@@ -36,12 +36,19 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/recentTableDeleteBtn"
-        android:layout_width="65dp"
+        android:id="@+id/recentTableViewBtn"
+        android:layout_width="45dp"
         android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:background="@color/white"
-        android:text="@string/deleteBtn"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_settings_black_24dp"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/recentTableDeleteBtn"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_delete_black_24dp"
         android:textSize="15dp" />
 
 </LinearLayout>

@@ -27,6 +27,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     Context appContext;
+    ArrayAdapter<String> adapter;
     public static final String DATABASE_NAME = "Train.db";
 
     /*TRAIN_TIMETABLE DETAILS*/
@@ -84,12 +85,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_STATION + "(STATION_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "STATION_NAME TEXT)");
 
-        db.execSQL("CREATE TABLE " + TABLE_TIMETABLE + "(TIMETABLE_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+        db.execSQL("CREATE TABLE " + TABLE_TIMETABLE + "(TIMETABLE_ID INTEGER PRIMARY KEY," +
                 " TIMETABLE_NAME TEXT, START_STATION INTEGER, END_STATION INTEGER, ARRIVAL_TIME TEXT, DEPART_TIME TEXT," +
                 " TIMETABLE_DATE TEXT, TRAIN_ID INTEGER, IS_DEFAULT INTEGER, FOREIGN KEY(TRAIN_ID) REFERENCES TRAIN(TRAIN_ID)," +
                 " FOREIGN KEY(START_STATION) REFERENCES STATION(STATION_ID), FOREIGN KEY(END_STATION) REFERENCES STATION(STATION_ID))");
 
-        db.execSQL("CREATE TABLE " + TABLE_RECENT_TABLES + "(RECENT_TABLEID INTEGER PRIMARY KEY AUTOINCREMENT," +
+        db.execSQL("CREATE TABLE " + TABLE_RECENT_TABLES + "(RECENT_TABLEID INTEGER PRIMARY KEY," +
                 "RECENT_RELEVENT_TABLEID INTEGER, FOREIGN KEY(RECENT_RELEVENT_TABLEID) REFERENCES TIMETABLE(TABLE_ID))");
 
         String Alarm_table_Q =
@@ -134,9 +135,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public int getNewTimeTableId(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select max(" + TIMETABLE_ID + ") from " +   TABLE_TIMETABLE, null);
+        do{
+
+            if(!cursor.moveToFirst()){
+                return 1;
+            }
+
+            return cursor.getInt(0) + 1;
+
+        }while (cursor.moveToNext());
+    }
+
+    public int getNewRecentTimeTableId(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select max(" + RECENT_TABLEID + ") from " +   TABLE_RECENT_TABLES, null);
+        do{
+
+            if(!cursor.moveToFirst()){
+                return 1;
+            }
+
+            return cursor.getInt(0) + 1;
+
+        }while (cursor.moveToNext());
+    }
+
     public boolean insertATimeTable(String timeTableName, int startStation, int endStation, String arrivalTime, String departTime, String date, int trainId, int isDefault){
         SQLiteDatabase db = this.getWritableDatabase();
+        int id = getNewTimeTableId();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(TIMETABLE_ID, id);
         contentValues.put(TIMETABLE_NAME, timeTableName);
         contentValues.put(START_STATION, startStation);
         contentValues.put(END_STATION, endStation);
@@ -183,7 +214,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }else {
             SQLiteDatabase db = this.getWritableDatabase();
+            int id = getNewRecentTimeTableId();
             ContentValues contentValues = new ContentValues();
+            contentValues.put(RECENT_TABLEID, id);
             contentValues.put(RECENT_RELEVENT_TABLEID, tableId);
             long result = db.insert(TABLE_RECENT_TABLES, null, contentValues);
             if (result == -1)
@@ -374,7 +407,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             labels = getAllStationLabels();
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(appContext, android.R.layout.simple_spinner_item, labels);
+        adapter = new ArrayAdapter<String>(appContext, android.R.layout.simple_spinner_item, labels);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
@@ -386,7 +419,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             labels = getAllTrainLabels();
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(appContext, android.R.layout.simple_spinner_item, labels);
+        adapter = new ArrayAdapter<String>(appContext, android.R.layout.simple_spinner_item, labels);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }

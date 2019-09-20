@@ -89,7 +89,7 @@
             android:gravity="center|bottom"
             android:paddingTop="10dp"
             android:paddingBottom="15dp"
-            android:text="@string/recentSearches"
+            android:text="@string/recentTables"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

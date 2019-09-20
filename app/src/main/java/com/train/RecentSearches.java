@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,15 +22,14 @@ import com.train.utils.DatabaseHelper;
 import com.train.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class RecentSearches extends Fragment implements View.OnClickListener {
+public class RecentSearches extends Fragment implements View.OnClickListener{
 
     DatabaseHelper trainDB;
     ListView recentSearchList;
     ArrayList<TrainTimeTable> trainTimeTable = new ArrayList<>();
     RecentSearchAdapter adapter;
-    Button viewRecentSearches, clearRecentSearch;
+    Button clearRecentSearch;
 
     @Nullable
     @Override
@@ -38,9 +37,7 @@ public class RecentSearches extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.recent_searches, container, false);
 
         recentSearchList = (ListView) view.findViewById(R.id.recentSearchesView);
-        viewRecentSearches = (Button) view.findViewById(R.id.recentViewBtn);
         clearRecentSearch = (Button) view.findViewById(R.id.clearRecentBtn);
-        viewRecentSearches.setOnClickListener(this);
         clearRecentSearch.setOnClickListener(this);
 
         trainDB = new DatabaseHelper(getContext());
@@ -66,15 +63,13 @@ public class RecentSearches extends Fragment implements View.OnClickListener {
         super.onResume();
         ((MainActivity) getActivity())
                 .setActionBarTitle("Recent Timetables");
+
     }
 
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.recentSearchesView:
-                fillListView();
-                break;
 
             case R.id.clearRecentBtn:
                 clearAll();
@@ -120,18 +115,25 @@ public class RecentSearches extends Fragment implements View.OnClickListener {
             LayoutInflater inflater = getLayoutInflater();
             view = inflater.inflate(R.layout.recent_searches_listview_item, parent, false);
 
-            TextView timeTableName = view.findViewById(R.id.recentTimeTableName);
+            final TextView timeTableName = view.findViewById(R.id.recentTimeTableName);
             TextView startStation = view.findViewById(R.id.recentTimeTableStartStation);
             TextView endStation = view.findViewById(R.id.recentTimeTableEndStation);
             Button delete = view.findViewById(R.id.recentTableDeleteBtn);
+            Button viewBtn = view.findViewById(R.id.recentTableViewBtn);
 
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    trainDB.deleteRecentTable(""+(timetables.get(position).getTimeTableId()));
                     timetables.remove(position);
                     adapter.notifyDataSetChanged();
-                    trainDB.deleteRecentTable(""+(position + 1));
-                    Toast.makeText(getContext(), "Item Deleted", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            viewBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditTimeTable(timetables.get(position))).addToBackStack(null).commit();
                 }
             });
 
@@ -141,4 +143,6 @@ public class RecentSearches extends Fragment implements View.OnClickListener {
             return view;
         }
     }
+
+
 }

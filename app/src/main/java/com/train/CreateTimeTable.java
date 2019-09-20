@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,6 +59,41 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
         trainDB.loadStations(startStationSpinner, stationsArray);
         trainDB.loadStations(endStationSpinner, stationsArray);
         trainDB.loadTrains(trainIdSpinner, trainsArray);
+
+
+            startStationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if(startStationSpinner.getSelectedItemPosition() != 0) {
+                        if (i == endStationSpinner.getSelectedItemPosition()) {
+                            Toast.makeText(getContext(), "Start Station cannot same as End Station", Toast.LENGTH_SHORT).show();
+                            startStationSpinner.setSelection(0);
+                        }
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+            endStationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if(endStationSpinner.getSelectedItemPosition() != 0) {
+                        if (i == startStationSpinner.getSelectedItemPosition()) {
+                            Toast.makeText(getContext(), "End Station cannot same as Start Station", Toast.LENGTH_SHORT).show();
+                            endStationSpinner.setSelection(0);
+                        }
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
 
         return view;
     }

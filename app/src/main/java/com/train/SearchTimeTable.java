@@ -153,6 +153,40 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
         Utils.disableBtn(endTime);
         txtDate.setText(null);
 
+        startStation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(startStation.getSelectedItemPosition() != 0) {
+                    if (i == endStation.getSelectedItemPosition()) {
+                        Toast.makeText(getContext(), "Start Station cannot same as End Station", Toast.LENGTH_SHORT).show();
+                        startStation.setSelection(0);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        endStation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(endStation.getSelectedItemPosition() != 0) {
+                    if (i == startStation.getSelectedItemPosition()) {
+                        Toast.makeText(getContext(), "End Station cannot same as Start Station", Toast.LENGTH_SHORT).show();
+                        endStation.setSelection(0);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     @Override
