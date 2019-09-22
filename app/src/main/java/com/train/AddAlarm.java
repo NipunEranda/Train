@@ -20,8 +20,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.train.utils.DatabaseHelper;
-
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
@@ -44,7 +42,7 @@ public class AddAlarm extends AppCompatActivity {
     AddAlarm inst;
     Context context;
 
-    DatabaseHelper trainDB;
+    AlarmDBHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,9 @@ public class AddAlarm extends AppCompatActivity {
         setContentView(R.layout.add_alarm);
 
         this.context = this;
-        trainDB = new DatabaseHelper(this);
+        mydb = new AlarmDBHelper(this);
+
+        final Intent myIntent = new Intent(this.context,AlarmReceiver.class);
 
         trainTime = (TextView) findViewById(R.id.trainTime);
         trainStation = (TextView) findViewById(R.id.trainStation);
@@ -60,57 +60,9 @@ public class AddAlarm extends AppCompatActivity {
         start_alarm = (Button) findViewById(R.id.setAlarmButton);
         cancelAlarm = (Button) findViewById(R.id.cancelAlarm);
         alarmTextView = (TextView) findViewById(R.id.alarmTextView);
-        timePicker = (TimePicker) findViewById(R.id.timePicker);
+
 
         AddData();
-    }
-
-    public void AddData(){
-
-
-        final Intent myIntent = new Intent(this.context,AlarmReceiver.class);
-
-        //get the alarm manager service
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        //set the alarm to the time that you picked
-        final Calendar calendar = Calendar.getInstance();
-
-        final String trainTimeConc = timePicker.getCurrentHour() + ":" +timePicker.getCurrentMinute();
-
-        start_alarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isInserted =  trainDB.insertAnAlarm(alarmName.getText().toString(),
-                        trainTimeConc,trainTime.getText().toString(),trainStation.getText().toString());
-
-                if(isInserted == true){
-                    Toast.makeText(AddAlarm.this,"Data Inserted",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(AddAlarm.this,"Data not Inserted",Toast.LENGTH_LONG).show();
-                }
-
-                calendar.add(Calendar.SECOND,3);
-
-                final int hour = timePicker.getCurrentHour();
-                final int minute = timePicker.getCurrentMinute();
-
-                Log.e("MyActivity", "In the receiver with " + hour + " and " + minute);
-                setAlarmText("You clicked a " + hour + " and " + minute);
-
-
-                calendar.set(Calendar.HOUR_OF_DAY,timePicker.getCurrentHour());
-                calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-
-                myIntent.putExtra("extra", "yes");
-                pendingIntent = PendingIntent.getBroadcast(AddAlarm.this,0,myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-
-                setAlarmText("Alarm set to " + hour + ":" + minute);
-            }
-        });
 
         cancelAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +77,63 @@ public class AddAlarm extends AppCompatActivity {
         });
     }
 
+    public void AddData(){
+
+        timePicker = (TimePicker) findViewById(R.id.timePicker);
+
+        start_alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isInserted =  mydb.insertData(alarmName.getText().toString(),
+                        timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute(),trainTime.getText().toString(),trainStation.getText().toString());
+
+                if(isInserted == true){
+                    Toast.makeText(AddAlarm.this,"Data Inserted",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(AddAlarm.this,"Data not Inserted",Toast.LENGTH_LONG).show();
+                }
+
+                SetAlarm();
+
+                Intent intent = new Intent(AddAlarm.this,saved_alarms.class);
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
+    public void SetAlarm(){
+        final Intent myIntent = new Intent(this.context,AlarmReceiver.class);
+
+        //get the alarm manager service
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        //set the alarm to the time that you picked
+        final Calendar calendar = Calendar.getInstance();
+
+        calendar.add(Calendar.SECOND,3);
+
+        final int hour = timePicker.getCurrentHour();
+        final int minute = timePicker.getCurrentMinute();
+
+        Log.e("MyActivity", "In the receiver with " + hour + " and " + minute);
+        setAlarmText("You clicked a " + hour + " and " + minute);
+
+
+        calendar.set(Calendar.HOUR_OF_DAY,timePicker.getCurrentHour());
+        calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+
+        myIntent.putExtra("extra", "yes");
+        pendingIntent = PendingIntent.getBroadcast(AddAlarm.this,0,myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+
+        setAlarmText("Alarm set to " + hour + ":" + minute);
+
+
+    }
     public void setAlarmText(String alarmText) {
         alarmTextView.setText(alarmText);
     }

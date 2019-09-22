@@ -1,17 +1,16 @@
 package com.train;
 
+
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import com.train.utils.DatabaseHelper;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +24,6 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    DatabaseHelper trainDB;
-    MenuItem action_settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +46,6 @@ public class MainActivity extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_timeTables);
         }
 
-        trainDB = new DatabaseHelper(getApplicationContext());
-        trainDB.setDefaultTrains();
-        trainDB.setDefaultStations();
-        Cursor cursor = trainDB.getAllTimeTables();
-        if(!cursor.moveToFirst()){
-            trainDB.setDefaultTimeTables();
-        }
-
-
 
     }
 
@@ -78,7 +66,6 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AppSettings()).commit();
             return true;
         }
 
@@ -105,6 +92,8 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_alarms:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Alarm()).commit();
+               // Intent intent = new Intent(MainActivity.this,Alarm.class);
+               // startActivity(intent);
                 break;
 
             case R.id.nav_share:

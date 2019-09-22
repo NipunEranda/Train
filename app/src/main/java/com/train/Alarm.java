@@ -35,6 +35,14 @@ public class Alarm extends Fragment {
             }
         });
 
+        viewAlarms = (Button) view.findViewById(R.id.viewAlarms);
+        viewAlarms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(getActivity(),saved_alarms.class);
+                startActivity(intent1);
+            }
+        });
 
         return view;
     }
