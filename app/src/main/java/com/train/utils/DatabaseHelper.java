@@ -294,6 +294,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public boolean udateATrain(String id, String trainName, String startStainT, String endStationT){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TRAIN_ID, id);
+        contentValues.put(TRAIN_NAME, trainName);
+        contentValues.put(TRAIN_START_STATION, startStainT);
+        contentValues.put(TRAIN_END_STATION, endStationT);
+        db.update(TABLE_TRAIN, contentValues, "TRAIN_ID = ?",new String[] {id});
+        return true;
+    }
+
     public String getStationName(int i){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + TABLE_STATION + " where " + STATION_ID + " = " + i, null);

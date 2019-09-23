@@ -68,9 +68,10 @@ public class AddTrain extends Fragment implements View.OnClickListener {
                 boolean isInserted = trainDB.insertATrain(trainName.getText().toString(),
                         startStation.getText().toString(),
                         endStation.getText().toString() );
-                if(isInserted = true)
-                    Toast.makeText(this.getActivity(),"Data Inserted", Toast.LENGTH_SHORT).show();
-                else
+                if(isInserted == true) {
+                    Toast.makeText(this.getActivity(), "Data Inserted", Toast.LENGTH_SHORT).show();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
+                }else
                     Toast.makeText(this.getActivity(),"Error", Toast.LENGTH_SHORT).show();
 
 
@@ -90,8 +91,8 @@ public class AddTrain extends Fragment implements View.OnClickListener {
                             }
                         });
                 AlertDialog alert = savBuilder.create();
-                alert.show();
-                break;*/
+                alert.show();*/
+                break;
             case R.id.cancelBtn:
                 /*AlertDialog.Builder canBuilder = new AlertDialog.Builder(this.getActivity());
                 canBuilder.setMessage("Are you Sure?")
@@ -110,6 +111,8 @@ public class AddTrain extends Fragment implements View.OnClickListener {
                         });
                 AlertDialog alert1 = canBuilder.create();
                 alert1.show();*/
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
+                break;
         }
 
     }

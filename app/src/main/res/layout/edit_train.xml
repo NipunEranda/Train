@@ -10,6 +10,30 @@
     <!-- TODO: Update blank fragment layout -->
 
 
+    <Button
+        android:id="@+id/udateTbtn"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginLeft="76dp"
+        android:layout_marginTop="108dp"
+        android:background="@drawable/custom_button"
+        android:text="Update"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditEname" />
+
+    <Button
+        android:id="@+id/cancelTbtn"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button"
+        android:backgroundTint="@color/lightgrey"
+        android:text="@android:string/cancel"
+        app:layout_constraintBaseline_toBaselineOf="@+id/udateTbtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintStart_toEndOf="@+id/udateTbtn" />
+
     <EditText
         android:id="@+id/editTrainName"
         android:layout_width="220dp"
@@ -21,6 +45,18 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/EditTname"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/EditTname" />
+
+    <EditText
+        android:id="@+id/editTrainId"
+        android:layout_width="220dp"
+        android:layout_height="41dp"
+        android:background="@drawable/custom_textboder"
+        android:ems="10"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editTid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTid" />
 
     <EditText
         android:id="@+id/editTrainStart"
@@ -52,8 +88,22 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="44dp"
         android:text="Train Name"
+        android:textColor="#455A64"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTid" />
+
+    <TextView
+        android:id="@+id/editTid"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="84dp"
+        android:text="Train ID"
         android:textColor="#455A64"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -87,28 +137,4 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditSname" />
-
-    <Button
-        android:id="@+id/udateTbtn"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_button"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
-        android:layout_marginTop="108dp"
-        android:text="@string/saveBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditEname" />
-
-    <Button
-        android:id="@+id/cancelTbtn"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_button"
-        android:backgroundTint="@color/lightgrey"
-        android:text="@android:string/cancel"
-        app:layout_constraintBaseline_toBaselineOf="@+id/udateTbtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.352"
-        app:layout_constraintStart_toEndOf="@+id/udateTbtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
