@@ -83,7 +83,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="15dp"
         android:shadowRadius="0"
-        android:text="Edit Train"
+        android:text="Edit and Delete Train"
         android:textAllCaps="true"
         android:textColor="@color/black"
         android:textDirection="firstStrongLtr"

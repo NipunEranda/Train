@@ -294,6 +294,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public Cursor getAllTrains(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_TRAIN, null);
+        return res;
+    }
+
     public boolean udateATrain(String id, String trainName, String startStainT, String endStationT){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -303,6 +309,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(TRAIN_END_STATION, endStationT);
         db.update(TABLE_TRAIN, contentValues, "TRAIN_ID = ?",new String[] {id});
         return true;
+    }
+
+    public Integer deleteATrain(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_TRAIN, "TRAIN_ID = ?", new String[] {id});
     }
 
     public String getStationName(int i){
@@ -340,12 +351,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from " + TABLE_STATION, null);
-        return res;
-    }
-
-    public Cursor getAllTrains(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from " + TABLE_TRAIN, null);
         return res;
     }
 

@@ -14,24 +14,43 @@
         android:id="@+id/udateTbtn"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/custom_button"
         android:text="Update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditEname" />
 
     <Button
         android:id="@+id/cancelTbtn"
-        android:layout_width="120dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:background="@drawable/custom_button"
         android:backgroundTint="@color/lightgrey"
         android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/udateTbtn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/editDeletebtn"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="65dp"
+        android:layout_marginRight="65dp"
+        android:background="@drawable/custom_button"
+        android:backgroundTint="@color/buttonColor"
+        android:text="delete"
         app:layout_constraintBaseline_toBaselineOf="@+id/udateTbtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintHorizontal_bias="0.78"
         app:layout_constraintStart_toEndOf="@+id/udateTbtn" />
 
     <EditText
@@ -137,4 +156,6 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditSname" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
