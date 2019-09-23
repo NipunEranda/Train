@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 public class Train extends Fragment implements View.OnClickListener {
 
-     Button addTBtn, viewBtn;
+    Button addTBtn, viewBtn, editBtnT;
 
     @Nullable
     @Override //start
@@ -20,9 +20,10 @@ public class Train extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.trains, container, false);
         addTBtn = view.findViewById(R.id.addTbtn);
         addTBtn.setOnClickListener(this);
-
         viewBtn = view.findViewById(R.id.viewTbtn);
         viewBtn.setOnClickListener(this);
+        editBtnT = view.findViewById(R.id.editTbtn);
+        editBtnT.setOnClickListener(this);
         return view;
     }
 
@@ -41,6 +42,9 @@ public class Train extends Fragment implements View.OnClickListener {
                 break;
             case R.id.viewTbtn:
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewTrain()).addToBackStack(null).commit();
+                break;
+            case  R.id.editTbtn:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditTrain()).addToBackStack(null).commit();
                 break;
         }
 

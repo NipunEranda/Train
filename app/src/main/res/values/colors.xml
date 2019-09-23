@@ -4,8 +4,16 @@
     <color name="colorPrimaryDark">#151B54</color>
     <color name="colorAccent">#1569C7</color>
     <color name="buttonColor">#357EC7</color>
-    <color name="lightgrey">#E5E4E2</color>
+    <color name="lightgrey">#F3F3F3</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="earthBlue">#0000A0</color>
+    <color name="darkOrange">#FF4500</color>
+    <color name="mediumOrange">#FF8C00</color>
+    <color name="lightOrange">	#FFA500</color>
+    <color name="darkGreen">#006400</color>
+    <color name="mediumGreen">#228B22</color>
+    <color name="lightGreen">#32CD32</color>
+    <color name="red">#F02828</color>
 
 </resources>

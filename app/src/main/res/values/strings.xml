@@ -3,9 +3,8 @@
     <string name="headerName">Train Schedule</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_title">ThunderCats</string>
+    <string name="nav_header_desc">SLIIT</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_timeTables">TimeTables</string>
@@ -14,9 +13,45 @@
     <string name="menu_alarms">Alarms</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="createBtn">Create</string>
+    <string name="searchBtn">Search</string>
+    <string name="userTables">User TimeTables</string>
+    <string name="recentTables">Recent\nTables</string>
+    <string name="nextTrainLabel">Next Train</string>
+    <string name="dailySchedule">Daily Schedule</string>
+    <string name="selectDateBtn">Select Date</string>
+    <string name="hint_selectDate">Select Date</string>
+    <string name="timeFilterLabel">Time Filter</string>
+    <string name="startTimeBtn">Start Time</string>
+    <string name="endTimeBtn">End Time</string>
+    <string name="startTimeLabel">Set Start Time</string>
+    <string name="endTimeLabel">Set End Time</string>
+    <string name="searchResultLabel">SEARCH RESULTS</string>
+    <string name="splashTopic">Train Schedule</string>
+    <string name="splashFooter">Created by THUNDERCATS</string>
+    <string name="viewBtn">view</string>
+    <string name="deleteBtn">Delete</string>
+    <string name="clearBtn">Clear</string>
+    <string name="hint_enterRouteName">Name for the route</string>
+    <string name="nameLabel">Name</string>
+    <string name="arrivalBtn">Arrive</string>
+    <string name="departBtn">Depart</string>
+    <string name="dateBtn">Date</string>
+    <string name="arrivalLabel">Set Arrival Time</string>
+    <string name="departLabel">Set Depart Time</string>
+    <string name="dateLabel">Set Date</string>
+    <string name="editBtn">Edit</string>
+    <string name="saveBtn">Save</string>
+    <string name="enterName">Enter alarm Name</string>
+    <string name="nameofStation">Name of the Station</string>
 
-    <string-array name="startStations">
-        <item>Select Start Station :</item>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="setAlarmBtn">Set Alarm</string>
+
+    <string name="setBtn">SET</string>
+
+    <string-array name="defaultStations">
         <item>AHUNGALLA</item>
         <item>AKBOPURA</item>
         <item>AKURALA</item>
@@ -27,37 +62,18 @@
         <item>AMBALANGODA</item>
     </string-array>
 
-    <string-array name="endStations">
-        <item>Select End Station : </item>
-        <item>AHUNGALLA</item>
-        <item>AKBOPURA</item>
-        <item>AKURALA</item>
-        <item>ALAWATUPITIYA</item>
-        <item>ALAWWA</item>
-        <item>ALUTH AMBALAMA</item>
-        <item>ALUTHGAMA</item>
-        <item>AMBALANGODA</item>
-    </string-array>
-
-    <string-array name="trainTypes">
-        <item>Select Train Type : </item>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="defaultTrains">
         <item>EXPRESS TRAIN</item>
         <item>LONG DISTANCE</item>
         <item>COLOMBO COMMUTER</item>
     </string-array>
-
-    <string-array name="recentSearch">
-        <item>Amabalngoda - Kollupitiya</item>
-        <item>Kollupitiya - Ambalangoda</item>
-        <item>Galle - Kollupitiya</item>
+    <string-array name="defaultTimeTables">
+        <item>AHUNGALLA to AKBOPURA,1,2,06:00,07:30,1-1-2019,1,1</item>
+        <item>AKBOPURA to AHUNGALLA,2,1,07:40,09:00,5-1-2019,1,1</item>
+        <item>AHUNGALLA to AKURALA,1,3,02:40,04:00,11-1-2019,2,1</item>
+        <item>AKURALA to AHUNGALLA,3,1,04:10,06:00,21-1-2019,2,1</item>
     </string-array>
-
-    <string-array name="userDefineTimeTables">
-        <item>Amabalngoda - Kollupitiya</item>
-        <item>Kollupitiya - Ambalangoda</item>
-        <item>Galle - Kollupitiya</item>
-    </string-array>
-
     <string-array name="viewTrain">
         <item>Ruhunu Kumari</item>
         <item>Udarata Menike</item>
@@ -65,8 +81,5 @@
         <item>Rajarata Rejini</item>
         <item>Samudra devi</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

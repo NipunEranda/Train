@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
-    tools:showIn="@layout/activity_main">
+    >
 
     <ScrollView
         android:layout_width="0dp"
@@ -37,38 +37,43 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="103dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/mediumGreen"
                     android:gravity="center"
                     android:text="Arrival - Depature"
+                    android:textColor="@color/white"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:fontFamily="sans-serif-condensed-medium" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/trainTime"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/mediumGreen"
                     android:gravity="center"
                     android:text="00.00 - 00.00"
+                    android:textColor="@color/white"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:fontFamily="sans-serif-condensed-medium" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/trainStation"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/mediumGreen"
                     android:gravity="center"
                     android:text="Gampha to Colombo"
+                    android:textColor="@color/white"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:fontFamily="sans-serif-condensed-medium" />
             </LinearLayout>
@@ -86,26 +91,38 @@
                     android:background="#004D40"
                     android:gravity="center"
                     android:text="Alarm Name"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
+                    android:layout_marginBottom="30dp"
                     app:fontFamily="sans-serif-condensed-medium" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/alarmName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="Enter Alarm Name"
+                    android:hint="@string/enterName"
                     android:inputType="textPersonName" />
-
 
                 <TimePicker
                     android:id="@+id/timePicker"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:headerBackground="@color/colorPrimary"
-                    android:timePickerMode="clock" />
+                    android:headerBackground="#004D40"
+                    android:timePickerMode="clock"
+                    android:numbersSelectorColor="#004D40"/>
+
+
+                <TextView
+                    android:id="@+id/alarmTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Set Time"
+                    android:layout_marginBottom="50dp"
+                    android:textAlignment="center"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,18 +138,19 @@
                         android:background="#004D40"
                         android:clickable="true"
                         android:gravity="center"
-                        android:onClick="nextLook"
-                        android:text="Set Alarm" />
+                        android:text="Set Alarm"
+                        android:textColor="@color/white" />
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/cancelAlarm"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="4dp"
                         android:layout_weight="1"
                         android:background="#004D40"
                         android:gravity="center"
-                        android:text="Cancel" />
+                        android:text="Cancel"
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
             </LinearLayout>

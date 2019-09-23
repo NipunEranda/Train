@@ -1,39 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView2"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/relativeLayout"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="225dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_conversion_absoluteHeight="0dp"
-        tools:layout_conversion_absoluteWidth="411dp"
-        tools:layout_conversion_wrapHeight="0"
-        tools:layout_conversion_wrapWidth="1080"
-        tools:ignore="MissingConstraints">
+        android:orientation="horizontal"
+        android:layout_gravity="right">
 
-        <ListView
-            android:id="@+id/userTimeTableList"
-            style="@style/Widget.AppCompat.ListView"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/clearRecentBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/lightgrey"
-            android:cacheColorHint="#00FFFFFF"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_conversion_absoluteHeight="0dp"
-            tools:layout_conversion_absoluteWidth="411dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_weight="1"
+            android:text="@string/clearBtn" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/recentSearchesView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

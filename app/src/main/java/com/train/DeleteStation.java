@@ -1,6 +1,7 @@
 package com.train;
 
 import android.content.Context;
+import android.icu.util.ValueIterator;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,17 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class SavedAlarms extends Fragment {
+public class DeleteStation extends Fragment {
+
+    View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.saved_alarms, container, false);
-
-        ((MainActivity) getActivity())
-                .setActionBarTitle("Saved Alarms");
-
+        view = inflater.inflate(R.layout.delete_stations, container, false);
         return view;
     }
 

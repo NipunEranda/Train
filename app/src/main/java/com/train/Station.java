@@ -10,14 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class Station extends Fragment {
+public class Station extends Fragment implements View.OnClickListener {
 
-    Button searchTrainStation;
+    Button addStation, editStation, searchStations, deleteStations;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.stations, container, false);
-        searchTrainStation = (Button)view.findViewById(R.id.searchTrainStation);
+        addStation = (Button) view.findViewById(R.id.addStation);
+        addStation.setOnClickListener(this);
+        editStation = (Button) view.findViewById(R.id.editStation);
+        editStation.setOnClickListener(this);
+        searchStations = (Button) view.findViewById(R.id.searchStations);
+        searchStations.setOnClickListener(this);
+        deleteStations = (Button) view.findViewById(R.id.deleteStations);
+        deleteStations.setOnClickListener(this);
         return view;
     }
 
@@ -26,11 +34,28 @@ public class Station extends Fragment {
         ((MainActivity) getActivity())
                 .setActionBarTitle("Stations");
 
-        searchTrainStation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchTrainStation()).addToBackStack(null).commit();
-            }
-        });
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.addStation:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddStation()).addToBackStack(null).commit();
+                break;
+
+            case R.id.editStation:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditStation()).addToBackStack(null).commit();
+                break;
+
+            case R.id.searchStations:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchStation()).addToBackStack(null).commit();
+                break;
+
+            case R.id.deleteStations:
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new DeleteStation()).addToBackStack(null).commit();
+                break;
+
+        }
     }
 }

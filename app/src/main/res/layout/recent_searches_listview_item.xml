@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/recentTimeTableName"
+        android:layout_width="276dp"
+        android:layout_height="60dp"
+        android:layout_weight="66.66"
+        android:gravity="center"
+        android:text="Time Table Name"
+        android:textAlignment="center" />
+
+    <LinearLayout
+        android:layout_width="162dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="18.33"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/recentTimeTableStartStation"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="start Station" />
+
+        <TextView
+            android:id="@+id/recentTimeTableEndStation"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="End Station" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/recentTableViewBtn"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_settings_black_24dp"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/recentTableDeleteBtn"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_delete_black_24dp"
+        android:textSize="15dp" />
+
+</LinearLayout>
