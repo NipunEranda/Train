@@ -38,7 +38,7 @@
             android:text="@string/arrivalBtn"
             android:textColor="#FFF"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endStation" />
+            app:layout_constraintTop_toBottomOf="@+id/startingStationSpinner" />
 
         <Button
             android:id="@+id/swapBtn"
@@ -53,10 +53,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endStation" />
+            app:layout_constraintTop_toBottomOf="@+id/startingStationSpinner" />
 
         <Spinner
-            android:id="@+id/endStation"
+            android:id="@+id/startingStationSpinner"
             style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_width="match_parent"
             android:layout_height="41dp"

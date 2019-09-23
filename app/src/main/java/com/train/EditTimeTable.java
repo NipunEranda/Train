@@ -3,7 +3,6 @@ package com.train;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -15,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -82,7 +80,7 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
                 .setActionBarTitle("View Timetables");
 
         startStationSpinner = view.findViewById(R.id.startStation);
-        endStationSpinner = view.findViewById(R.id.endStation);
+        endStationSpinner = view.findViewById(R.id.startingStationSpinner);
         trainIdSpinner = view.findViewById(R.id.trainId);
 
         stationsArray = getResources().getStringArray(R.array.defaultStations);

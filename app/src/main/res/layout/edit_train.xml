@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout8"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgrey"
+    tools:context=".EditTrain">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <Button
+        android:id="@+id/udateTbtn"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/custom_button"
+        android:text="Update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditEname" />
+
+    <Button
+        android:id="@+id/cancelTbtn"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/custom_button"
+        android:backgroundTint="@color/white"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/udateTbtn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/editDeletebtn"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="65dp"
+        android:layout_marginRight="65dp"
+        android:background="@drawable/custom_button"
+        android:backgroundTint="@color/buttonColor"
+        android:text="delete"
+        app:layout_constraintBaseline_toBaselineOf="@+id/udateTbtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.78"
+        app:layout_constraintStart_toEndOf="@+id/udateTbtn" />
+
+    <EditText
+        android:id="@+id/editTrainName"
+        android:layout_width="220dp"
+        android:layout_height="41dp"
+        android:background="@drawable/custom_textboder"
+        android:ems="10"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/EditTname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/EditTname" />
+
+    <EditText
+        android:id="@+id/editTrainId"
+        android:layout_width="220dp"
+        android:layout_height="41dp"
+        android:background="@drawable/custom_textboder"
+        android:ems="10"
+        android:textAlignment="center"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editTid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTid" />
+
+    <TextView
+        android:id="@+id/EditTname"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="44dp"
+        android:text="Train Name"
+        android:textColor="#455A64"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTid" />
+
+    <TextView
+        android:id="@+id/editTid"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="84dp"
+        android:text="Train ID"
+        android:textColor="#455A64"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/EditSname"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="44dp"
+        android:text="Starting Station"
+        android:textColor="#455A64"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditTname" />
+
+    <TextView
+        android:id="@+id/EditEname"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="44dp"
+        android:text="Destination"
+        android:textColor="#455A64"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EditSname" />
+
+    <Spinner
+        android:id="@+id/startingStationSpinner"
+        android:layout_width="217dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/EditSname"
+        app:layout_constraintTop_toBottomOf="@+id/editTrainName" />
+
+    <Spinner
+        android:id="@+id/endStationSpinner"
+        android:layout_width="217dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/EditEname"
+        app:layout_constraintTop_toBottomOf="@+id/startingStationSpinner" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

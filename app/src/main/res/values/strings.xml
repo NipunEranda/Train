@@ -57,9 +57,11 @@
     </string-array>
 
     <string-array name="defaultTrains">
-        <item>EXPRESS TRAIN</item>
-        <item>LONG DISTANCE</item>
-        <item>COLOMBO COMMUTER</item>
+        <item>Ruhunu Kumari,1,1</item>
+        <item>Udarata Menike,2,3</item>
+        <item>Yal devi,3,5</item>
+        <item>Rajarata Rejini,5,2</item>
+        <item>Samudra devi,3,7</item>
     </string-array>
 
     <string-array name="defaultTimeTables">

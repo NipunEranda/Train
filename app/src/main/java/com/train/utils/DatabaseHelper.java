@@ -50,6 +50,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_TRAIN = "TRAIN";
     public static final String TRAIN_ID = "TRAIN_ID";
     public static final String TRAIN_NAME = "TRAIN_NAME";
+    public static final String TRAIN_START_STATION = "START_STATION";
+    public static final String TRAIN_END_STATION = "END_STATION";
     /**/
 
     /*STATION DETAILS*/
@@ -79,8 +81,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_TRAIN + "(TRAIN_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " TRAIN_NAME TEXT)");
+
+        db.execSQL("CREATE TABLE " + TABLE_TRAIN + "(TRAIN_ID INTEGER PRIMARY KEY," +
+                " TRAIN_NAME TEXT, START_STATION INTEGER, END_STATION INTEGER)");
 
         db.execSQL("CREATE TABLE " + TABLE_STATION + "(STATION_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "STATION_NAME TEXT)");
@@ -138,6 +141,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getNewTimeTableId(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select max(" + TIMETABLE_ID + ") from " +   TABLE_TIMETABLE, null);
+        do{
+
+            if(!cursor.moveToFirst()){
+                return 1;
+            }
+
+            return cursor.getInt(0) + 1;
+
+        }while (cursor.moveToNext());
+    }
+
+    public int getNewTrainId(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select max(" + TRAIN_ID + ") from " +   TABLE_TRAIN, null);
         do{
 
             if(!cursor.moveToFirst()){
@@ -263,15 +280,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public boolean insertATrain(String trainName){
+    public boolean insertATrain(String trainName, int startStainT, int endStationT){
         SQLiteDatabase db = this.getWritableDatabase();
+        int id = getNewTrainId();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(TRAIN_ID, id);
         contentValues.put(TRAIN_NAME, trainName);
+        contentValues.put(TRAIN_START_STATION, startStainT);
+        contentValues.put(TRAIN_END_STATION, endStationT);
         long result = db.insert(TABLE_TRAIN, null, contentValues);
         if(result == -1)
             return false;
         else
             return true;
+    }
+
+
+    public boolean udateATrain(String id, String trainName, int startStainT, int endStationT){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TRAIN_ID, id);
+        contentValues.put(TRAIN_NAME, trainName);
+        contentValues.put(TRAIN_START_STATION, startStainT);
+        contentValues.put(TRAIN_END_STATION, endStationT);
+        db.update(TABLE_TRAIN, contentValues, "TRAIN_ID = ?",new String[] {id});
+        return true;
+    }
+
+    public Integer deleteATrain(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_TRAIN, "TRAIN_ID = ?", new String[] {id});
     }
 
     public String getStationName(int i){
@@ -333,7 +371,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(!cursor.moveToFirst()){
             String defaultTrains[] = appContext.getResources().getStringArray(R.array.defaultTrains);
             for(int i = 0; i < defaultTrains.length; ++i){
-                insertATrain(defaultTrains[i]);
+                String details[] = defaultTrains[i].split(",");
+                insertATrain(details[0], Integer.parseInt(details[1]), Integer.parseInt(details[2]));
             }
         }
     }

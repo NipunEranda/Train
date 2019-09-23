@@ -3,14 +3,17 @@ package com.train;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
+import android.provider.ContactsContract;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.train.utils.DatabaseHelper;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,8 @@ import android.widget.Toast;
 @SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    DatabaseHelper trainDB;
 
 
     @Override
@@ -46,6 +51,20 @@ public class MainActivity extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_timeTables);
         }
 
+        trainDB = new DatabaseHelper(getApplicationContext());
+        Cursor cursor = trainDB.getAllTimeTables();
+        if(!cursor.moveToFirst()){
+            trainDB.setDefaultTimeTables();
+        }
+        Cursor cursor1 = trainDB.getAllStations();
+        if(!cursor1.moveToFirst()){
+            trainDB.setDefaultStations();
+        }
+        Cursor cursor2 = trainDB.getAllTrains();
+        if(!cursor2.moveToFirst()){
+            trainDB.setDefaultTrains();
+        }
+
 
     }
 
@@ -66,7 +85,7 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AppSettings()).addToBackStack(null).commit();
         }
 
         return super.onOptionsItemSelected(item);

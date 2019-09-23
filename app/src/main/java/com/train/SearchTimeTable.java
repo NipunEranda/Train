@@ -20,7 +20,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.train.adapters.TimeTableAdapter;
 import com.train.utils.DatabaseHelper;
 import com.train.utils.Utils;
 import com.train.utils.getDateTime;
@@ -48,7 +47,7 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.search_time_table, container, false);
         startStation = (Spinner) view.findViewById(R.id.startStation);
-        endStation = (Spinner) view.findViewById(R.id.endStation);
+        endStation = (Spinner) view.findViewById(R.id.startingStationSpinner);
         nextTrain = (Switch) view.findViewById(R.id.nextTrainSwitch);
         dailyTrain = (Switch) view.findViewById(R.id.dailyTrainSwitch);
         timeFilterCheck = (Switch)view.findViewById(R.id.timeFilterCheck);

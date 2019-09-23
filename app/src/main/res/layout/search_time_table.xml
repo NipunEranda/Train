@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
         <Spinner
-            android:id="@+id/endStation"
+            android:id="@+id/startingStationSpinner"
             style="@android:style/Widget.Holo.Light.Spinner"
             android:layout_width="fill_parent"
             android:layout_height="41dp"
@@ -89,7 +89,7 @@
             android:paddingRight="8sp"
             android:textColor="#FFF"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/endStation" />
+            app:layout_constraintTop_toBottomOf="@+id/startingStationSpinner" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/radioGroup"

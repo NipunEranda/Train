@@ -18,8 +18,6 @@ import android.widget.Toast;
 import com.train.utils.DatabaseHelper;
 import com.train.utils.getDateTime;
 
-import java.util.ArrayList;
-
 public class CreateTimeTable extends Fragment implements View.OnClickListener {
 
     int[] date;
@@ -43,7 +41,7 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
         departTimeTxt = (TextView)view.findViewById(R.id.departTxt);
         dateTxt = (TextView)view.findViewById(R.id.dateTxt);
         startStationSpinner = view.findViewById(R.id.startStation);
-        endStationSpinner = view.findViewById(R.id.endStation);
+        endStationSpinner = view.findViewById(R.id.startingStationSpinner);
         trainIdSpinner = view.findViewById(R.id.trainType);
         swapBtn = view.findViewById(R.id.swapBtn);
         arrivalBtn.setOnClickListener(this);

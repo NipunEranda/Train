@@ -33,6 +33,13 @@ public class AppSettings extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) getActivity())
+                .setActionBarTitle("Settings");
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.setDefaultTablesBtn:
