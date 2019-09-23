@@ -5,7 +5,8 @@
     android:id="@+id/frameLayout8"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditTrain">
+    tools:context=".EditTrain"
+    android:background="@color/lightgrey">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -30,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@drawable/custom_button"
-        android:backgroundTint="@color/lightgrey"
+        android:backgroundTint="@color/white"
         android:text="@android:string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
