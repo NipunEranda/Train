@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.train.utils.DatabaseHelper;
+import com.train.utils.Utils;
 import com.train.utils.getDateTime;
 
 public class CreateTimeTable extends Fragment implements View.OnClickListener {
@@ -27,6 +28,7 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
     Button arrivalBtn, departBtn,dateBtn, saveBtn, swapBtn;
     TextView arrivalTimeTxt, departTimeTxt, dateTxt, routeName;
     View view;
+    String dateText;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -115,13 +117,34 @@ public class CreateTimeTable extends Fragment implements View.OnClickListener {
                 date = getDateTime.getDateView(getContext(), dateTxt);
                 break;
             case R.id.saveBtn:
-                String dateText = String.valueOf(date[0]) + "-" + String.valueOf(date[1]) + "-" + String.valueOf(date[2]);
-                boolean isInserted = trainDB.insertATimeTable(routeName.getText().toString(), startStationSpinner.getSelectedItemPosition(), endStationSpinner.getSelectedItemPosition(), arrivalTimeTxt.getText().toString(), departTimeTxt.getText().toString(), dateText, trainIdSpinner.getSelectedItemPosition(), 0);
-                if(isInserted){
-                    Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).addToBackStack(null).commit();
+                if(routeName.getText().toString().equalsIgnoreCase("")){
+                    routeName.setError("Route name required");
+                }else if(routeName.getText().toString().length() > 20){
+                    routeName.setError("Cannot have a name longer than 20 characters");
+                }else if(startStationSpinner.getSelectedItemPosition() == 0 || startStationSpinner.getSelectedItemPosition() == -1){
+                    Utils.showMessage("Error", "Start Station Required", getContext());
+                }else if(endStationSpinner.getSelectedItemPosition() == 0 || endStationSpinner.getSelectedItemPosition() == -1){
+                    Utils.showMessage("Error", "End Station Required", getContext());
+                }else if(arrivalTimeTxt.getText().toString().equalsIgnoreCase("Set Arrival Time")) {
+                    Utils.showMessage("Error", "Arrival Time Required", getContext());
+                }else if(departTimeTxt.getText().toString().equalsIgnoreCase("Set Depart Time")){
+                    Utils.showMessage("Error", "Depart Time Required", getContext());
+                }else if(trainIdSpinner.getSelectedItemPosition() == 0 || trainIdSpinner.getSelectedItemPosition() == -1){
+                    Utils.showMessage("Error", "Train Name Required", getContext());
                 }else{
-                    Toast.makeText(getContext(), "Unsuccessful", Toast.LENGTH_SHORT).show();
+
+                    if(!dateTxt.getText().toString().equalsIgnoreCase("Set Date"))
+                        dateText = "" + String.valueOf(date[0]) + "-" + String.valueOf(date[1]) + "-" + String.valueOf(date[2]);
+                    else
+                        dateText = "";
+
+                    boolean isInserted = trainDB.insertATimeTable(routeName.getText().toString(), startStationSpinner.getSelectedItemPosition(), endStationSpinner.getSelectedItemPosition(), arrivalTimeTxt.getText().toString(), departTimeTxt.getText().toString(), dateText, trainIdSpinner.getSelectedItemPosition(), 0);
+                    if (isInserted) {
+                        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).addToBackStack(null).commit();
+                    } else {
+                        Toast.makeText(getContext(), "Unsuccessful", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 break;
 

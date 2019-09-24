@@ -477,31 +477,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == false && !(date.equals("")) && isTimeFilterOn == false){
             res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + END_STATION + " = " + endStationID + " AND " + TIMETABLE_DATE + " <= '" + date + "'", null);
-            Toast.makeText(appContext, "Normal with date", Toast.LENGTH_SHORT).show();
         }
-        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == false){
-            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + END_STATION + " = " + endStationID + " AND " + ARRIVAL_TIME + " > " + Utils.getCurrentTime(appContext), null);
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals("") && isTimeFilterOn == false){
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + END_STATION + " = " + endStationID + " AND " + ARRIVAL_TIME + " > " + Utils.getCurrentTime(appContext) + " AND " + TIMETABLE_DATE + " <= '" + date + "'", null);
             Toast.makeText(appContext, "Finding Next Train, date is known", Toast.LENGTH_SHORT).show();
         }
-        /*if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == false){
-            Toast.makeText(appContext, "Finding Next Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals("") && isTimeFilterOn == false){
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + END_STATION + " = " + endStationID + " AND " + ARRIVAL_TIME + " > " + Utils.getCurrentTime(appContext) + " AND " + TIMETABLE_DATE + " <= '" + date + "'", null);
+            Toast.makeText(appContext, "Finding Next Train, date is known", Toast.LENGTH_SHORT).show();
         }
-        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals(null) && isTimeFilterOn == false){
-            Toast.makeText(appContext, "Finding Next Train, date is known, startStation known", Toast.LENGTH_SHORT).show();
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && !date.equals("") && isTimeFilterOn == false){
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + ARRIVAL_TIME + " > " + Utils.getCurrentTime(appContext) + " AND " + TIMETABLE_DATE + " <= '" + date + "'", null);
         }
-        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == false){
-            Toast.makeText(appContext, "Finding Next Train, date is unKnown, endstation known", Toast.LENGTH_SHORT).show();
+        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals("") && isTimeFilterOn == false){
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + END_STATION + " = " + endStationID + " AND " + ARRIVAL_TIME + " > " + Utils.getCurrentTime(appContext), null);
         }
-        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == false){
-            Toast.makeText(appContext, "Finding Next Train, date is unKnown, startStation known", Toast.LENGTH_SHORT).show();
+        if(startStationID != 0 && endStationID == 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals("") && isTimeFilterOn == false){
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + ARRIVAL_TIME + " > " + Utils.getCurrentTime(appContext), null);
         }
-        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals(null) && isTimeFilterOn == false){
-            Toast.makeText(appContext, "Finding Next Train,  date is unKnown", Toast.LENGTH_SHORT).show();
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == true && isDailyScheduleOn == false && date.equals("") && isTimeFilterOn == false){
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + END_STATION + " = " + endStationID, null);
         }
-        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == false){
-            Toast.makeText(appContext, "Finding Daily Train, date is known", Toast.LENGTH_SHORT).show();
+        if(startStationID != 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals("") && isTimeFilterOn == false){
+            res = db.rawQuery("SELECT * FROM " + TABLE_TIMETABLE + " WHERE " + START_STATION + " = " + startStationID + " AND " + END_STATION + " = " + endStationID + " AND " + TIMETABLE_DATE + " = '" + date + "'", null);
         }
-        if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == false){
+        /*if(startStationID == 0 && endStationID != 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == false){
             Toast.makeText(appContext, "Finding Daily Train, date is known, endstation known", Toast.LENGTH_SHORT).show();
         }
         if(startStationID != 0 && endStationID == 0 && isNextTrainOn == false && isDailyScheduleOn == true && !date.equals(null) && isTimeFilterOn == false){

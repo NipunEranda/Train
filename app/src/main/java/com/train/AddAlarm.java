@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.train.utils.Utils;
+
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
@@ -84,20 +86,25 @@ public class AddAlarm extends AppCompatActivity {
         start_alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isInserted =  mydb.insertData(alarmName.getText().toString(),
-                        timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute(),trainTime.getText().toString(),trainStation.getText().toString());
 
-                if(isInserted == true){
-                    Toast.makeText(AddAlarm.this,"Data Inserted",Toast.LENGTH_LONG).show();
+                if(!alarmName.getText().toString().equalsIgnoreCase("")) {
+
+                    boolean isInserted = mydb.insertData(alarmName.getText().toString(),
+                            timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute(), trainTime.getText().toString(), trainStation.getText().toString());
+
+                    if (isInserted == true) {
+                        Toast.makeText(AddAlarm.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(AddAlarm.this, "Data not Inserted", Toast.LENGTH_LONG).show();
+                    }
+
+                    SetAlarm();
+
+                    Intent intent = new Intent(AddAlarm.this, saved_alarms.class);
+                    startActivity(intent);
+                }else{
+                    Utils.showMessage("Error", "Alarm name should set", AddAlarm.this);
                 }
-                else{
-                    Toast.makeText(AddAlarm.this,"Data not Inserted",Toast.LENGTH_LONG).show();
-                }
-
-                SetAlarm();
-
-                Intent intent = new Intent(AddAlarm.this,saved_alarms.class);
-                startActivity(intent);
             }
         });
 

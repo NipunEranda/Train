@@ -108,36 +108,26 @@ public class AddTrain extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.saveBtn:
-                boolean isInserted = trainDB.insertATrain(trainName.getText().toString(),
-                        startingStationSpinner.getSelectedItemPosition(),
-                        endStationSpinner.getSelectedItemPosition());
-                if(isInserted == true) {
-                    Toast.makeText(this.getActivity(), "Data Inserted", Toast.LENGTH_SHORT).show();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
-                }else
-                    Toast.makeText(this.getActivity(),"Error", Toast.LENGTH_SHORT).show();
+                if(trainName.getText().toString().isEmpty()) {
+                    trainName.setError("Train name can't be Empty");
+                }else if(startingStationSpinner.getSelectedItemPosition() == 0) {
+                    Toast.makeText(this.getActivity(), "Starting station cannot be empty", Toast.LENGTH_SHORT).show();
+                }else if(endStationSpinner.getSelectedItemPosition() == 0 ){
+                    Toast.makeText(this.getActivity(), "Destination cannot be empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    boolean isInserted = trainDB.insertATrain(trainName.getText().toString(),
+                            startingStationSpinner.getSelectedItemPosition(),
+                            endStationSpinner.getSelectedItemPosition());
+                    if (isInserted == true) {
+                        Toast.makeText(this.getActivity(), "Data Inserted", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
+                    } else
+                        Toast.makeText(this.getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                }
 
-
-                /*AlertDialog.Builder savBuilder = new AlertDialog.Builder(this.getActivity());
-                savBuilder.setMessage("Are you sure, you want to save?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ViewTrain()).addToBackStack(null).commit();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
-                AlertDialog alert = savBuilder.create();
-                alert.show();*/
                 break;
             case R.id.cancelBtn:
-                /*AlertDialog.Builder canBuilder = new AlertDialog.Builder(this.getActivity());
+                AlertDialog.Builder canBuilder = new AlertDialog.Builder(this.getActivity());
                 canBuilder.setMessage("Are you Sure?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -153,8 +143,8 @@ public class AddTrain extends Fragment implements View.OnClickListener {
                             }
                         });
                 AlertDialog alert1 = canBuilder.create();
-                alert1.show();*/
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
+                alert1.show();
+
                 break;
         }
 

@@ -34,13 +34,15 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
     Switch nextTrain, dailyTrain, timeFilterCheck;
     View view;
     Button btnDatePicker, startTime, endTime, timeTableSaveBtn, swap;
-    EditText txtDate;
-    TextView startTimeTxt, endTimeTxt;
+    TextView startTimeTxt, endTimeTxt, dateTxt;
     ListView searchTimeTables;
     ArrayList<TrainTimeTable> timeTableArrayList;
     int[] pickedDate = new int[3];
     private int mYear, mMonth, mDay, mHour, mMinute;
     static boolean status = true;
+    String date, startTimeText, endTimeText;
+    int startStationID, endStationID;
+    boolean isNextTrainOn, isDailyScheduleOn, isTimeFilterOn;
 
     @Nullable
     @Override
@@ -60,7 +62,7 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
         endTime.setBackgroundColor(Color.parseColor("#E5E4E2"));
         endTime.setTextColor(Color.parseColor("#000000"));
         swap = (Button)view.findViewById(R.id.swapBtn);
-        txtDate=(EditText)view.findViewById(R.id.in_date);
+        dateTxt = view.findViewById(R.id.in_date);
         startTimeTxt=(TextView)view.findViewById(R.id.startTimeTxt);
         endTimeTxt=(TextView) view.findViewById(R.id.endTimeTxt);
         timeTableSaveBtn = (Button)view.findViewById(R.id.timeTableSearchBtn);
@@ -150,7 +152,7 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
         timeFilterCheck.setChecked(false);
         Utils.disableBtn(startTime);
         Utils.disableBtn(endTime);
-        txtDate.setText(null);
+        dateTxt.setText(null);
 
         startStation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -192,7 +194,7 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_date:
-                pickedDate = getDateTime.getDateView(getContext(), txtDate);
+                pickedDate = getDateTime.getDateView(getContext(), dateTxt);
                 break;
 
             case R.id.endTime:
@@ -210,39 +212,56 @@ public class SearchTimeTable extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.timeTableSearchBtn:
-                String date = null;
-                int startStationID = startStation.getSelectedItemPosition();
-                int endStationID = endStation.getSelectedItemPosition();
-                boolean isNextTrainOn = nextTrain.isChecked();
-                boolean isDailyScheduleOn = dailyTrain.isChecked();
+                date = null;
+                startStationID = startStation.getSelectedItemPosition();
+                endStationID = endStation.getSelectedItemPosition();
+                isNextTrainOn = nextTrain.isChecked();
+                isDailyScheduleOn = dailyTrain.isChecked();
                 if(pickedDate[0] == 0) {
                     date = "";
                 }else{
                     date = String.valueOf(pickedDate[0]) + "-" + String.valueOf(pickedDate[1] + "-" + String.valueOf(pickedDate[2]));
                 }
-                boolean isTimeFilterOn = timeFilterCheck.isChecked();
-                String startTime = startTimeTxt.getText().toString();
-                String endTime = endTimeTxt.getText().toString();
+                isTimeFilterOn = timeFilterCheck.isChecked();
+                startTimeText = startTimeTxt.getText().toString();
+                endTimeText = endTimeTxt.getText().toString();
 
-                if(startStationID != endStationID) {
-                    Cursor res = trainDB.timeTableSearch(startStationID, endStationID, isNextTrainOn, isDailyScheduleOn, date, isTimeFilterOn, startTime, endTime);
-                    if (res != null) {
-                        do {
-                            if (!res.moveToFirst()) {
-                                Utils.showMessage("Error", "No Results", getContext());
-                                break;
-                            } else {
-                                TrainTimeTable trainTimeTable = new TrainTimeTable(res.getInt(0), res.getString(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8));
-                                timeTableArrayList.add(trainTimeTable);
-                            }
-                        } while (res.moveToNext());
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchTimeTableView(timeTableArrayList)).addToBackStack(null).commit();
-                    }
+                if(startStationID == -1 || startStationID == 0){
+                    Utils.showMessage("Error", "Start Station Required", getContext());
+                }else if(endStationID == -1 || endStationID == 0){
+                    Utils.showMessage("Error", "End Station Required", getContext());
                 }else{
-                    Utils.showMessage("Error", "Starting station cannot be same as Depart Station", getContext());
+                    if(isTimeFilterOn) {
+                        if (startTimeTxt.getText().toString().equalsIgnoreCase("Set Start Time")) {
+                            Utils.showMessage("Error", "Start Time Required", getContext());
+                        } else if (endTimeTxt.getText().toString().equalsIgnoreCase("Set End Time")) {
+                            Utils.showMessage("Error", "End Time Required", getContext());
+                        }else{
+                            search();
+                        }
+                    }else{
+                        search();
+                    }
                 }
+
+
                 break;
 
+        }
+    }
+    public void search(){
+        Cursor res = trainDB.timeTableSearch(startStationID, endStationID, isNextTrainOn, isDailyScheduleOn, date, isTimeFilterOn, startTimeText, endTimeText);
+        if (res != null) {
+            do {
+                if (!res.moveToFirst()) {
+                    Utils.showMessage("Error", "No Results", getContext());
+                    break;
+                } else {
+                    TrainTimeTable trainTimeTable = new TrainTimeTable(res.getInt(0), res.getString(1), res.getInt(2), res.getInt(3), res.getString(4), res.getString(5), res.getString(6), res.getInt(7), res.getInt(8));
+                    timeTableArrayList.add(trainTimeTable);
+                }
+            } while (res.moveToNext());
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchTimeTableView(timeTableArrayList)).addToBackStack(null).commit();
         }
     }
 }

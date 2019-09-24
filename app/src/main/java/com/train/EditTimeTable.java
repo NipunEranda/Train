@@ -159,34 +159,51 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
 
                 if(saveBtn.getText().toString().equalsIgnoreCase("save")){
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Save");
-                    builder.setMessage("Are you sure");
-                    builder.setCancelable(false);
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            editOn = false;
-                            ((MainActivity) getActivity())
-                                    .setActionBarTitle("View Timetables");
-                            saveBtn.setText("Edit");
-                            setAlarmBtn.setBackgroundColor(getResources().getColor(R.color.buttonColor));
-                            setAlarmBtn.setText("Set Alarm");
-                            //set Query
-                            boolean isUpdate = trainDB.editTimeTable(String.valueOf(trainTimeTable.getTimeTableId()), tableName.getText().toString(), startStationSpinner.getSelectedItemPosition(), endStationSpinner.getSelectedItemPosition(), arrivalTimeTxt.getText().toString(), departTimeTxt.getText().toString(), dateTxt.getText().toString(), trainIdSpinner.getSelectedItemPosition(), trainTimeTable.getIsDefault());
-                            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-                            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).commit();
-                        }
-                    });
+                    if(tableName.getText().toString().equalsIgnoreCase("")){
+                        tableName.setError("Route name required");
+                    }else if(tableName.getText().toString().length() > 20){
+                        tableName.setError("Cannot have a name longer than 20 characters");
+                    }else if(startStationSpinner.getSelectedItemPosition() == 0 || startStationSpinner.getSelectedItemPosition() == -1){
+                        Utils.showMessage("Error", "Start Station Required", getContext());
+                    }else if(endStationSpinner.getSelectedItemPosition() == 0 || endStationSpinner.getSelectedItemPosition() == -1){
+                        Utils.showMessage("Error", "End Station Required", getContext());
+                    }else if(arrivalTimeTxt.getText().toString().equalsIgnoreCase("Set Arrival Time")) {
+                        Utils.showMessage("Error", "Arrival Time Required", getContext());
+                    }else if(departTimeTxt.getText().toString().equalsIgnoreCase("Set Depart Time")){
+                        Utils.showMessage("Error", "Depart Time Required", getContext());
+                    }else if(trainIdSpinner.getSelectedItemPosition() == 0 || trainIdSpinner.getSelectedItemPosition() == -1){
+                        Utils.showMessage("Error", "Train Name Required", getContext());
+                    }else {
 
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("Save");
+                        builder.setMessage("Are you sure");
+                        builder.setCancelable(false);
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                editOn = false;
+                                ((MainActivity) getActivity())
+                                        .setActionBarTitle("View Timetables");
+                                saveBtn.setText("Edit");
+                                setAlarmBtn.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                setAlarmBtn.setText("Set Alarm");
+                                //set Query
+                                boolean isUpdate = trainDB.editTimeTable(String.valueOf(trainTimeTable.getTimeTableId()), tableName.getText().toString(), startStationSpinner.getSelectedItemPosition(), endStationSpinner.getSelectedItemPosition(), arrivalTimeTxt.getText().toString(), departTimeTxt.getText().toString(), dateTxt.getText().toString(), trainIdSpinner.getSelectedItemPosition(), trainTimeTable.getIsDefault());
+                                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new TimeTable()).commit();
+                            }
+                        });
 
-                        }
-                    });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                    builder.show();
+                            }
+                        });
+
+                        builder.show();
+                    }
                 }else{
                     editOn = true;
                     setFieldEnable();

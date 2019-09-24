@@ -1,6 +1,8 @@
 package com.train;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -99,18 +101,24 @@ public class EditTrain extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.udateTbtn:
-                boolean isUpdate = trainDB.udateATrain(edTid.getText().toString(),
-                        edTrainName.getText().toString(),
-                        startingStationSpinner.getSelectedItemPosition(),
-                        endStationSpinner.getSelectedItemPosition());
-                if(isUpdate == true){
-                    Toast.makeText(this.getActivity(),"Data Updated", Toast.LENGTH_SHORT).show();
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
-                }else
-                    Toast.makeText(this.getActivity(),"Error", Toast.LENGTH_SHORT).show();
+                if(edTid.getText().toString().isEmpty()) {
+                    Toast.makeText(this.getActivity(), "Id cannot be empty",Toast.LENGTH_SHORT).show();
+                    /*edTid.setError("Train id can't be Empty");*/
+                }else {
+                    boolean isUpdate = trainDB.udateATrain(edTid.getText().toString(),
+                            edTrainName.getText().toString(),
+                            startingStationSpinner.getSelectedItemPosition(),
+                            endStationSpinner.getSelectedItemPosition());
+                    if (isUpdate == true) {
+                        Toast.makeText(this.getActivity(), "Data Updated", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
+                    } else
+                        Toast.makeText(this.getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                }
+                break;
 
             case R.id.cancelTbtn:
-                /*AlertDialog.Builder canBuilder = new AlertDialog.Builder(this.getActivity());
+                AlertDialog.Builder canBuilder = new AlertDialog.Builder(this.getActivity());
                 canBuilder.setMessage("Are you Sure?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -126,16 +134,16 @@ public class EditTrain extends Fragment implements View.OnClickListener{
                             }
                         });
                 AlertDialog alert1 = canBuilder.create();
-                alert1.show();*/
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new Train()).addToBackStack(null).commit();
+                alert1.show();
+
                 break;
             case R.id.editDeletebtn:
                 Integer deleteRows = trainDB.deleteATrain(edTid.getText().toString());
                 if(deleteRows != 0)
-                    Toast.makeText(this.getActivity(),"Data Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this.getActivity(),"Selected Data hs been Deleted", Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(this.getActivity(),"Data not Deleted", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(this.getActivity(),"No data were Deleted, please enter a Train Id", Toast.LENGTH_SHORT).show();
+                break;
         }
 
     }

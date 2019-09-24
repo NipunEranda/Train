@@ -9,9 +9,11 @@
         android:layout_width="753dp"
         android:layout_height="60dp"
         android:layout_weight="66.66"
+        android:background="#80B8DF"
         android:gravity="center"
         android:text="Time Table Name"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="#000000" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -23,15 +25,19 @@
             android:id="@+id/timeTableStartStation"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:background="#80B8DF"
             android:gravity="center"
-            android:text="start Station" />
+            android:text="start Station"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/timeTableEndStation"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:background="#80B8DF"
             android:gravity="center"
-            android:text="End Station" />
+            android:text="End Station"
+            android:textColor="#000000" />
 
     </LinearLayout>
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#80B8DF">
 
 
     <TextView
@@ -9,9 +10,11 @@
         android:layout_width="276dp"
         android:layout_height="60dp"
         android:layout_weight="66.66"
+        android:background="#80B8DF"
         android:gravity="center"
         android:text="Time Table Name"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="#000000" />
 
     <LinearLayout
         android:layout_width="162dp"
@@ -23,31 +26,39 @@
             android:id="@+id/recentTimeTableStartStation"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:background="#80B8DF"
             android:gravity="center"
-            android:text="start Station" />
+            android:text="start Station"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/recentTimeTableEndStation"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:background="#80B8DF"
             android:gravity="center"
-            android:text="End Station" />
+            android:text="End Station"
+            android:textColor="#000000" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/recentTableViewBtn"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0"
+        android:background="#80B8DF"
         android:drawableLeft="@drawable/ic_settings_black_24dp"
         android:textSize="15dp" />
 
     <Button
         android:id="@+id/recentTableDeleteBtn"
-        android:layout_width="45dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="42dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0"
+        android:background="#80B8DF"
         android:drawableLeft="@drawable/ic_delete_black_24dp"
         android:textSize="15dp" />
 

@@ -31,7 +31,7 @@
     <string name="splashFooter">Created by THUNDERCATS</string>
     <string name="viewBtn">view</string>
     <string name="deleteBtn">Delete</string>
-    <string name="clearBtn">Clear</string>
+    <string name="clearBtn">Clear All</string>
     <string name="hint_enterRouteName">Name for the route</string>
     <string name="nameLabel">Name</string>
     <string name="arrivalBtn">Arrive</string>
