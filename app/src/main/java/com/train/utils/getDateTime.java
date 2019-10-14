@@ -69,6 +69,7 @@ public class getDateTime {
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
+
         return dateArray;
     }
 

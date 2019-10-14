@@ -24,7 +24,7 @@ public class saved_alarms extends AppCompatActivity {
     AlarmListAdapter alarmListAdapter;
     ListView listView;
     AlarmDBHelper alarmDBHelper;
-    Button settingAlarm,deleteAlarm;
+    Button settingAlarm,deleteAlarm, addAlarm;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,6 @@ public class saved_alarms extends AppCompatActivity {
 
         alarmDBHelper = new AlarmDBHelper(this);
         listView = (ListView) findViewById(R.id.list);
-
         arrayList = new ArrayList<>();
         LoadDataInListView();
 

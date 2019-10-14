@@ -20,19 +20,23 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.train.utils.DatabaseHelper;
 import com.train.utils.Utils;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddAlarm extends AppCompatActivity {
 
     AlarmManager alarmManager;
+    DatabaseHelper trainDB;
     private PendingIntent pendingIntent;
+    static TrainTimeTable trainTimeTable;
 
     private TimePicker timePicker;
-    private TextView alarmTextView;
+    private TextView alarmTextView, time;
 
     TextView trainTime,trainStation;
     EditText alarmName;
@@ -55,6 +59,7 @@ public class AddAlarm extends AppCompatActivity {
         mydb = new AlarmDBHelper(this);
 
         final Intent myIntent = new Intent(this.context,AlarmReceiver.class);
+        trainDB = new DatabaseHelper(getApplicationContext());
 
         trainTime = (TextView) findViewById(R.id.trainTime);
         trainStation = (TextView) findViewById(R.id.trainStation);
@@ -62,6 +67,9 @@ public class AddAlarm extends AppCompatActivity {
         start_alarm = (Button) findViewById(R.id.setAlarmButton);
         cancelAlarm = (Button) findViewById(R.id.cancelAlarm);
         alarmTextView = (TextView) findViewById(R.id.alarmTextView);
+
+        trainTime.setText(trainTimeTable.getArrivalTime() + " - " + trainTimeTable.getDepartTime());
+        trainStation.setText(trainDB.getStationName(trainTimeTable.getStartStation()) + " - " + trainDB.getStationName(trainTimeTable.getEndStation()));
 
 
         AddData();
@@ -78,6 +86,14 @@ public class AddAlarm extends AppCompatActivity {
             }
         });
     }
+
+    public static void setTimeTable(TrainTimeTable timeTable){
+
+        trainTimeTable = timeTable;
+
+    }
+
+
 
     public void AddData(){
 

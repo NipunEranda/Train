@@ -251,6 +251,7 @@ public class EditTimeTable extends Fragment implements View.OnClickListener {
                     saveBtn.setText("Edit");
                     setAlarmBtn.setText("Set Alarm");
                 }else {
+                    AddAlarm.setTimeTable(trainTimeTable);
                     Intent i = new Intent(getContext(), AddAlarm.class);
                     startActivity(i);
                 }
